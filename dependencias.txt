@@ -1,3 +1,6 @@
 npm install express
 npm install nodemon
 npm install express-edge
+npm install body-parser
+npm install edge-js
+npm install redis
