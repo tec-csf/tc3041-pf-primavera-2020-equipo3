@@ -1,0 +1,25 @@
+@layout('layouts.first')
+@section('contentLogin')
+
+    <h3>Ingrese sus datos</h3>
+    
+    <div class="container">
+        <div class="row mt-2">
+        <div class="col-6 offset-3">
+            <form action="/login/validate" method="POST">
+                <div class="form-group">
+                    <label for="">Email</label>
+                    <input type="text" class="form-control" placeholder="Insert your email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="">Password</label>
+                    <input type="password" class="form-control" placeholder="Password" name="passwd" required>
+                </div>
+        </div>
+    </div>
+<div class="form-group">
+    <button class="btn btn-primary">Login</button>
+    <a href="/newUser">Don't have an account?</a>
+</div>
+@endsection
