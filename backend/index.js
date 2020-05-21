@@ -32,6 +32,10 @@ app.post('/login/validate', async(req, res) => {
     var email = req.body.email;
     var password = req.body.passwd;
 
+    console.log(email);
+
+    console.log(password);
+
     MongoClient.connect(url, function (err, db) {
         if (err) throw err;
 
@@ -39,33 +43,34 @@ app.post('/login/validate', async(req, res) => {
         var collection = dB.collection("users");
 
         collection.find({
-            Email: email
+            Password: password
         }, {
             $exists: true
         }).toArray(function (err, doc) {
             //console.log(doc);
-            if (doc) {
-                //console.log(doc + "\n");
+            if (doc == true) {
+                console.log(doc + "\n");
 
                 collection.find({
-                    Password: password
+                    Email: email
                 }, {
                     $exists: true
                 }).toArray(function (err, verified) {
                     if (verified) {
                         console.log(verified);
+                        res.redirect('/home');
                     } else if (!verified) {
                         console.log("Check your password once more");
+                        res.redirect('/loginerror')
                     }
                 })
 
-            } else if (!doc) {
+            } else if (!doc == false) {
                 console.log("Not in DB");
             }
             db.close();
         });
     });
-    res.redirect('/home');
 });
 
 //  Register a new user
@@ -96,6 +101,7 @@ app.post('/newUser/save', (req, res) => {
 });
 //  End register a new user
 
+//  Home Screen
 app.get('/home', async (req, res) => {
 
 
@@ -113,6 +119,11 @@ app.get('/home', async (req, res) => {
     })
     res.render('home');
 })
+
+//  Screens Settings
+app.get('/settings', async(req,res)=>{
+    res.render('settings');
+});
 
 app.listen(4000, () => {
     console.log('App is running in port 4000')
