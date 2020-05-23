@@ -1,0 +1,50 @@
+@layout('layouts.menu')
+@section('homeMenu')
+
+    <h2>User Settings</h2>
+    <p>Select one of the following options</p>
+
+    <div class="container">
+    <div class="row mt-2">
+        <div class="col-6 offset-3">
+            <form action="/editarUsuario/save" method="POST">
+                
+                <div class="form-group">
+                    <label for="">User ID</label>
+                    <input type="text" class="form-control" placeholder="Ingresa el ID" name="uID" value="{{users._id}}"required readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="">Name</label>
+                    <input type="text" class="form-control" placeholder="Ingresa el nombre" name="nombre" value="{{users.Name}}" required readonly>
+                </div>
+
+                <div class="form-group">
+                <label for="">Last name</label>
+                    <input type="text" class="form-control" placeholder="Ingresa el apellido" name="apellido" value="{{users.LastName}}"  required readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="">Email</label>
+                    <input type="text" class="form-control" placeholder="Ingresa la direccion" name="direccion" value="{{users.Email}}"  required readonly>
+                </div>
+            </form>
+
+            <div class="row mt-2">
+                
+                
+                <div class="float-left">
+                    <button class="btn btn-danger" type="button" onclick="window.location.href='/home'">Back home</button>
+                </div>
+            
+            </div>
+        </>
+            
+    </div>
+</div>
+@endsection
+
+<div class="col-sm-12" style="width:800px; margin:0 auto;">
+                    <button class="btn btn-primary" onclick="window.location.href='/cardSettings'">View cards</button>
+                    <button class="btn btn-secondary" onclick="window.location.href='/address'">View addresses</button>
+                </div><br><br>

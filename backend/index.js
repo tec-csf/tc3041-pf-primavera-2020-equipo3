@@ -121,8 +121,38 @@ app.get('/home', async (req, res) => {
 })
 
 //  Screens Settings
-app.get('/settings', async(req,res)=>{
-    res.render('settings');
+app.get('/mainSettings', async(req,res)=>{
+    res.render('mainSettings');
+});
+
+//Solo para añadir productos
+app.get('/products', async(req, res)=>{
+    res.render('productos');
+});
+
+app.post('/addProducts/save', (req, res) => {
+    var product = {
+        Name: req.body.name,
+        Brand: req.body.brand,
+        Price: req.body.price,
+        Description: req.body.description,
+        Rating: req.body.rating,
+        Availability: req.body.availability,
+        Image: req.body.image
+    };
+
+    console.log(product);
+
+    mongo.connect(url, function (err, db) {
+        if (err) throw err;
+        var dB = db.db("tienda");
+        dB.collection("products").insertOne(product, function (err, result) {
+            if (err) throw err;
+            console.log("Product created");
+            db.close();
+        });
+    });
+    res.redirect('/home');
 });
 
 app.listen(4000, () => {
