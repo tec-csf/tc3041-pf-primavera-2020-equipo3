@@ -1,6 +1,29 @@
 @layout('layouts.menu')
 @section('homeMenu')
+<link rel="stylesheet" type="text/css" href="styles.css">
+<link rel="stylesheet" href="/styles/styles.css">
+<section>
+    <div class = "container">  
+        <div class = "row my-3">
+            <div class = "col-sm-12 col-lg-4 col-md-4 order-lg-1 order-md-2 borde">
+                <h3 class = "text-left">Top Produts</h3>
+                <form action="/home" method="GET">
+                </form>
+            </div>
+            <div class = "col-sm-12 col-lg-8 col-md-8 order-md-2 order-lg-2">
+                <h3 class = "text-left">Store</h3>
+            </div>
+        </div>
+    </div>
+</section>
+<style>
+    .borde {
+      border-right: #cdcdcd medium solid;
+      height: 100vh;
+    }
+    h3{
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 
-<p>In order to use the app correctly, use the menu from the navigation bar</p>
-
+    }
+    </style>
 @endsection

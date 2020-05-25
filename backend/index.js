@@ -8,6 +8,7 @@ const { config, engine } = require("express-edge");
 const MongoClient = require("mongodb").MongoClient;
 const mongo = require("mongodb");
 const url = "mongodb+srv://equipo3:admin@cluster-1xa1r.gcp.mongodb.net/test?retryWrites=true&w=majority";
+var str = "";
 // Automatically sets view engine and adds dot notation to app.render
 app.use(engine);
 app.set("views", `../frontend`);
@@ -116,6 +117,21 @@ app.get('/home', async (req, res) => {
         res.render('home', {
             usuario: user
         })
+
+        var cursor = dB.collection('products').find({});
+        str = "";
+        cursor.forEach(function(item) {
+            
+            if (item != null) {
+                str = str + "Product id " + item._id + "&lt;/br&gt;";
+            }
+ 
+        }, function(err) {
+            res.send(err);
+            
+            }
+            );
+        res.send(str);
     })
     res.render('home');
 })
