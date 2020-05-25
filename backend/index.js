@@ -104,8 +104,6 @@ app.get('/home', async (req, res) => {
         if (err) throw err;
         var dB = db.db("tienda");
 
-        /* var user = await dB.collection('users').find({}).sort({_id: 1}); */
-
         var products = await dB.collection('products').find({}).sort({_id:1}).toArray();
 
         console.log(products);
@@ -150,6 +148,14 @@ app.post('/addProducts/save', (req, res) => {
     });
     res.redirect('/home');
 });
+
+app.get('/cards', async(req, res)=>{
+    res.render('cards')
+});
+
+app.get('/',async(req, res)=>{
+    res.render('login');
+})
 
 app.listen(4000, () => {
     console.log('App is running in port 4000')
