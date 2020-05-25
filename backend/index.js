@@ -106,19 +106,22 @@ app.post('/newUser/save', (req, res) => {
 app.get('/home', async (req, res) => {
 
 
-    mongo.connect(url, async function (err, db) {
+    mongo.connect(url, async(err, db) =>{
+        
         if (err) throw err;
-
         var dB = db.db("tienda");
 
-        var user = await dB.collection('users').find({}).sort({_id: 1});
+        /* var user = await dB.collection('users').find({}).sort({_id: 1}); */
 
-        console.log(usuarios);
+        var products = await dB.collection('products').find({}).sort({_id:1}).toArray();
+
+        console.log(products);
+
         res.render('home', {
-            usuario: user
+            products: products
         })
 
-        var cursor = dB.collection('products').find({});
+        /* var cursor = dB.collection('products').find({});
         str = "";
         cursor.forEach(function(item) {
             
@@ -130,11 +133,11 @@ app.get('/home', async (req, res) => {
             res.send(err);
             
             }
-            );
-        res.send(str);
+            ); 
+        res.send(str);*/
     })
-    res.render('home');
-})
+    /* res.render('home'); */
+});
 
 //  Screens Settings
 app.get('/mainSettings', async(req,res)=>{
