@@ -1,6 +1,6 @@
 # TC3041 Proyecto Final Primavera 2020
 
-# *[Poner aquí el Título del Proyecto]*
+# *Tienda virtual*
 ---
 
 ##### Integrantes:
@@ -54,7 +54,10 @@ Como parte de la entrega final del proyecto, se debe incluir la siguiente inform
 
 ## 2. Descripción del proyecto
 
-*[Incluya aquí la descripción del proyecto seleccionado.]*
+*[Falta explicar mas a fondo]*
+
+Como proyecto final, decidimos hacer una tienda en línea donde un usuario pueda realizar las compras que quiera. Dentro de la aplicación web, contamos con las siguientes características:
+
 
 ## 3. Solución
 

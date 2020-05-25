@@ -1,12 +1,12 @@
 @layout('layouts.first')
 @section('contentLogin')
 
-    <h3>Ingrese sus datos</h3>
+    <h3>Insert your information</h3>
     
     <div class="container">
         <div class="row mt-2">
         <div class="col-6 offset-3">
-            <form action="/login/validate" method="POST">
+            <form action="/loginValidate" method="POST">
                 <div class="form-group">
                     <label for="">Email</label>
                     <input type="text" class="form-control" placeholder="Insert your email" name="email" required>

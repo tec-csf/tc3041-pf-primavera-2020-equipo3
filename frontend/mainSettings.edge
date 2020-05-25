@@ -1,5 +1,5 @@
-@layout('layouts.menu')
-@section('homeMenu')
+@layout('layouts.userSettings')
+@section('userMenu')
 
     <h2>User Settings</h2>
     <p>Select one of the following options</p>
@@ -30,21 +30,19 @@
                 </div>
             </form>
 
+            <div class="col-sm-12" style="width:800px; margin:0 auto;">
+                <button class="btn btn-primary" onclick="window.location.href='/cards'">View cards</button>
+                <button class="btn btn-secondary" onclick="window.location.href='/address'">View addresses</button>
+            </div><br><br>
+
             <div class="row mt-2">
-                
-                
                 <div class="float-left">
                     <button class="btn btn-danger" type="button" onclick="window.location.href='/home'">Back home</button>
                 </div>
             
             </div>
-        </>
+        </button>
             
     </div>
 </div>
 @endsection
-
-<div class="col-sm-12" style="width:800px; margin:0 auto;">
-                    <button class="btn btn-primary" onclick="window.location.href='/cardSettings'">View cards</button>
-                    <button class="btn btn-secondary" onclick="window.location.href='/address'">View addresses</button>
-                </div><br><br>

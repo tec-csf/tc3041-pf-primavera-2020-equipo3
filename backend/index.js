@@ -28,7 +28,7 @@ app.get('/login', async (req, res) => {
     res.render('login');
 });
 
-app.post('/login/validate', async(req, res) => {
+app.post('/loginValidate', async(req, res) => {
     
     var email = req.body.email;
     var password = req.body.passwd;
@@ -43,36 +43,29 @@ app.post('/login/validate', async(req, res) => {
         var dB = db.db("tienda");
         var collection = dB.collection("users");
 
-        collection.find({
-            Password: password
-        }, {
-            $exists: true
-        }).toArray(function (err, doc) {
-            //console.log(doc);
-            if (doc == true) {
-                console.log(doc + "\n");
+        collection.findOne({"Email":email}, function(err, doc){
+            if(err) throw err;
 
-                collection.find({
-                    Email: email
-                }, {
-                    $exists: true
-                }).toArray(function (err, verified) {
-                    if (verified) {
-                        console.log(verified);
-                        res.redirect('/home');
-                    } else if (!verified) {
-                        console.log("Check your password once more");
-                        res.redirect('/loginerror')
-                    }
-                })
+            console.log(doc);
 
-            } else if (!doc == false) {
-                console.log("Not in DB");
+            if(doc && doc._id){
+                if (password == doc["Password"]) {
+                    console.log("Correct login")
+                    res.redirect("/home")
+                }else{
+                    res.send("Invalid login, check your password");
+                }
+            }else{
+                res.send("Invalid login, check your email");
             }
-            db.close();
         });
-    });
+    }); 
 });
+
+//In case there's a login error
+app.get('/loginerror', (req, res)=>{
+    res.render('loginerror')
+})
 
 //  Register a new user
 app.get('/newUser', (req, res) => {
@@ -120,23 +113,7 @@ app.get('/home', async (req, res) => {
         res.render('home', {
             products: products
         })
-
-        /* var cursor = dB.collection('products').find({});
-        str = "";
-        cursor.forEach(function(item) {
-            
-            if (item != null) {
-                str = str + "Product id " + item._id + "&lt;/br&gt;";
-            }
- 
-        }, function(err) {
-            res.send(err);
-            
-            }
-            ); 
-        res.send(str);*/
     })
-    /* res.render('home'); */
 });
 
 //  Screens Settings
