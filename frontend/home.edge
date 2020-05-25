@@ -13,6 +13,7 @@
                 <th scope="col">Rating</th>
                 <th scope="col">Availability</th>
                 <th scope="col">Image</th>
+                <th scope="col">Options</th>
             </tr>
         </thead>
         <tbody>
@@ -24,8 +25,16 @@
                 <td>{{product.Description}}</td>
                 <td>{{product.Rating}}</td>
                 <td>{{product.Availability}}</td>
-                <td>{{product.Image}}</td>
                 <td>
+                    <img src="{{product.Image}}">
+                </td>
+                <td>
+                    <a href="#" class="btn btn-info text-right">
+                        Add to cart
+                    </a>
+                    <a href="#" class="btn btn-primary text-right">
+                        Add to wishlist
+                    </a>
                 </td>
             </tr>
             @endeach
