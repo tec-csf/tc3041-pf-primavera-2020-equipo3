@@ -9,6 +9,9 @@ const MongoClient = require("mongodb").MongoClient;
 const mongo = require("mongodb");
 const url = "mongodb+srv://equipo3:admin@cluster-1xa1r.gcp.mongodb.net/test?retryWrites=true&w=majority";
 var str = "";
+
+var userLogin = [];
+
 // Automatically sets view engine and adds dot notation to app.render
 app.use(engine);
 app.set("views", `../frontend`);
@@ -21,6 +24,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 //  Login
 app.get('/', async (req, res) => {
+    console.log(userLogin);
   res.render('login');
 });
 
@@ -30,12 +34,18 @@ app.get('/login', async (req, res) => {
 
 app.post('/loginValidate', async(req, res) => {
     
+    userLogin = [];
+
     var email = req.body.email;
     var password = req.body.passwd;
 
     console.log(email);
 
     console.log(password);
+
+    userLogin.push(email);
+
+    console.log(userLogin);
 
     MongoClient.connect(url, function (err, db) {
         if (err) throw err;
@@ -46,12 +56,13 @@ app.post('/loginValidate', async(req, res) => {
         collection.findOne({"Email":email}, function(err, doc){
             if(err) throw err;
 
-            console.log(doc);
-
             if(doc && doc._id){
                 if (password == doc["Password"]) {
+                    //console.log(doc);
+                    //var string = encodeURIComponent(doc);
+                    //console.log(userSession);
                     console.log("Correct login")
-                    res.redirect("/home")
+                    res.redirect("/home");
                 }else{
                     res.send("Invalid login, check your password");
                 }
@@ -98,17 +109,28 @@ app.post('/newUser/save', (req, res) => {
 //  Home Screen
 app.get('/home', async (req, res) => {
 
+    console.log("Home");
+    console.log(userLogin);
+
+    var userVer = userLogin.toString();
 
     mongo.connect(url, async(err, db) =>{
         
+        console.log(userVer);
+
         if (err) throw err;
         var dB = db.db("tienda");
+        var collectionUsers = dB.collection("users");
 
         var products = await dB.collection('products').find({}).sort({_id:1}).toArray();
+        var user = await collectionUsers.findOne({"Email": userVer});
+
+        console.log(user);
 
         console.log(products);
 
         res.render('home', {
+            user,
             products: products
         })
     })
@@ -116,7 +138,31 @@ app.get('/home', async (req, res) => {
 
 //  Screens Settings
 app.get('/mainSettings', async(req,res)=>{
-    res.render('mainSettings');
+    //res.render('mainSettings');
+    var userVer = userLogin.toString();
+    console.log(userVer);
+
+    MongoClient.connect(url, function(err, db){
+        if(err) throw err;
+
+        var dB = db.db("tienda");
+        var collection = dB.collection("users");
+
+        var search={
+            Email:userVer
+        };
+
+        collection.find(search).toArray(function(err, userS){
+            if(err) throw err;
+
+            var user = userS[0];
+
+            console.log(user);
+            res.render('mainSettings',{
+                user
+            });
+        })
+    })
 });
 
 //Solo para añadir productos
@@ -153,7 +199,11 @@ app.get('/cards', async(req, res)=>{
     res.render('cards')
 });
 
-app.get('/',async(req, res)=>{
+
+//User logut
+app.get('/logout',async(req, res)=>{
+    userLogin = [];
+    console.log(userLogin)
     res.render('login');
 })
 
