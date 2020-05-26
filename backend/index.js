@@ -304,7 +304,6 @@ app.post('/deleteCard/confirm', (req, res)=>{
         Email: userVer
     };
 
-
     MongoClient.connect(url, function(err, db){
         if (err) throw err;
         var dB = db.db("tienda");
@@ -313,23 +312,26 @@ app.post('/deleteCard/confirm', (req, res)=>{
             if (err) throw err;
             
             var userS = user[0];
-
+            
             console.log(userS._id);
-
+            
             var delCard = {
                 uID: userS._id,
                 uEmail: userVer,
                 cNumber: req.body.cNumber,
-                bank: req.body.bank,
-                expDate: req.body.expDate,
+                bank:   req.body.bank,
+                expDate: req.body.expDate
             };
 
             console.log(delCard);
 
-            dB.collection("bank accounts").remove(delCard, function (err, result) {
-               if (err) throw err;
-               console.log("\nCard deleted")
-           })
+            dB.collection("bank accounts").remove(delCard, function(err, result){
+                if (err) throw err;
+
+                console.log(result[0]);
+
+                console.log("\nCard deleted");
+            })
 
         });
         
@@ -365,6 +367,143 @@ app.get('/address', async(req, res)=>{
         })
     })
 })
+
+app.get('/newAddress', async(req, res)=>{
+    var userVer = userLogin.toString();
+    
+    res.render('newAddress',{
+        userVer
+    })
+});
+
+app.post('/newAddress/save', async(req, res)=>{
+    var userVer = userLogin.toString()
+
+    var search={
+        Email:userVer
+    };
+
+    MongoClient.connect(url, function(err, db){
+        if (err) throw err;
+
+        var dB = db.db("tienda");
+
+        dB.collection("users").find(search).toArray(function(err, user){
+            if(err) throw err;
+
+            var user = user[0];
+
+            var dir ={
+                uID: user._id,
+                uEmail: userVer,
+                aName: req.body.name,
+                street: req.body.street,
+                intNumber: req.body.number,
+                PC: req.body.pC,
+                Country: req.body.country,
+                State: req.body.state,
+                City: req.body.city
+            }
+
+            console.log(dir);
+
+            dB.collection("addresses").insertOne(dir, function(err, result){
+                if (err) throw err;
+                console.log("Address added")
+            })
+            res.redirect('/mainSettings');
+        })
+    })
+})
+
+app.get('/deleteAddress', async(req, res)=>{
+    var userVer = userLogin.toString();
+
+    var search = {
+        uEmail: userVer
+    };
+
+    MongoClient.connect(url, async function(err, db){
+        if (err) throw err;
+        var dB = db.db("tienda")
+
+        dB.collection("addresses").find(search).toArray(function(err, dir){
+            if (err) throw err;
+
+            var address = dir[0];
+            console.log(address);
+
+            res.render('deleteAddress', {
+                address
+            })
+        })
+    })
+});
+
+app.post('/deleteAddress/save', (req, res)=>{
+    var userVer = userLogin.toString();
+
+    console.log(userVer)
+
+    var addressData = {
+        _id: req.body.addressID
+    }
+
+    var searchUser = {
+        Email: userVer
+    }
+
+    console.log(addressData);
+
+    var dir = {
+        uEmail: userVer,
+        aName: req.body.name,
+        street: req.body.street,
+        intNumber: req.body.number,
+        PC: req.body.pC,
+        Country: req.body.country,
+        State: req.body.state,
+        City: req.body.city
+    }
+
+    MongoClient.connect(url, async function(err, db){
+        if (err) throw err;
+        var dB = db.db("tienda");
+
+        dB.collection("users").find(searchUser).toArray(function(err, user){
+            if (err) throw err;
+
+            var usr = user[0];
+
+            console.log(usr._id);
+
+            var dir = {
+                uID: usr._id,
+                uEmail: userVer,
+                aName: req.body.name,
+                street: req.body.street,
+                intNumber: req.body.intNumber,
+                PC: req.body.pC,
+                Country: req.body.country,
+                State: req.body.state,
+                City: req.body.city
+            }
+
+            console.log("\nDireccion");
+            console.log(dir);
+
+            dB.collection("addresses").remove(dir, function(err, result){
+                if (err) throw err;
+
+                console.log(result[0]);
+
+                console.log("Address deleted");
+            })
+
+        })
+    })
+    res.redirect('/mainSettings')
+});
 
 //User logut
 app.get('/logout',async(req, res)=>{

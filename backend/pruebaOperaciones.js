@@ -29,11 +29,12 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.static(path.join(__dirname, "public")));
 
 //
-var email = "a01021960@itesm.mx";
 var password = "admin1234";
-var cNumber = "1234567890098765";
-var bank = "CitiBanamex";
-var expDate = "2020-12";
+var email = "a01021960@itesm.mx";
+var cNumber = "1234098756789012";
+var bank = "Scotiabank";
+var expDate = "2019-03";
+
 
 var userVer = email;
 
@@ -73,83 +74,18 @@ var searchBA = {
 }
 
 MongoClient.connect(url, function (err, db) {
-  if (err) throw err;
-  var dB = db.db("tienda");
-
-  /* dB.collection("users")
-    .find(search)
-    .toArray(function (err, user) {
-      if (err) throw err;
-
-      var userS = user[0];
-
-        console.log(userS._id);
-
-      var delCard = {
-        uID: userS._id,
-        uEmail: userVer,
-        cNumber: cNumber,
-        bank: bank,
-        expDate: expDate,
-      };
-
-      console.log(delCard);
-
-      dB.collection("bank accounts").remove(delCard, function (err, result) {
-        if (err) throw err;
-        console.log("\n" + result + "\nCard deleted");
-      });
-
-    }); */
-    dB.collection("bank accounts").find(searchBA).toArray(function(err, bAcc){
-        if(err) throw err;
-
-        console.log(bAcc[0]);
-
-        var cardID = bAcc._id;
-    
-        console.log("\n"+cardID);
-    })
-});
-
-/* MongoClient.connect(url, async function (err, db) {
     if (err) throw err;
-
     var dB = db.db("tienda");
 
-    dB.collection("users").find(search).toArray(function(err, user){
-        if(err) throw err;
+    dB.collection("users").find(search).toArray(function (err, user) {
+        if (err) throw err;
 
         var userS = user[0];
 
-        console.log(user);
-        console.log(userS);
-
-        var cardDel = {
-            uID: userS._id,
-            uEmail: userVer,
-            cNumber: cNumber,
-            bank: bank,
-            expDate: expDate,
-        };
-
-        console.log(cardDel);
-
-    })
-}) */
-
-/* MongoClient.connect(url, async function (err, db) {
-    if (err) throw err;
-
-    var dB = db.db("tienda");
-
-    dB.collection("users").find(search).toArray(function(err, user){
-        if (err) throw err;
-
-        var user = user[0];
+        console.log(userS._id);
 
         var delCard = {
-            uID: user._id,
+            uID: userS._id,
             uEmail: userVer,
             cNumber: cNumber,
             bank: bank,
@@ -158,11 +94,14 @@ MongoClient.connect(url, function (err, db) {
 
         console.log(delCard);
 
-        dB.collection("bank accounts").deleteOne(delCard, function(err, result){
+        dB.collection("bank accounts").remove(delCard, function (err, result) {
             if (err) throw err;
-            console.log("\n"+ result + "\nCard deleted")
+
+            console.log(result[0]);
+
+            console.log("\nCard deleted");
         })
-        
-        console.log(user);
+
     });
-}) */
+
+});

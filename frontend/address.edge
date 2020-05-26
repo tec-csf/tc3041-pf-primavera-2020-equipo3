@@ -5,15 +5,14 @@
         
     <br><a href='/mainSettings' class="btn btn-warning">Back to settings</a>
 
-    <button class="btn btn-success" onclick="window.location.href='/addAddress'">Add a new address</button><br><br>
+    <button class="btn btn-success" onclick="window.location.href='/newAddress'">Add a new address</button><br><br>
 
     <table class="table">
         <thead>
             <tr>
-                <th scope="col">Address ID</th>
-                <th scope="col">Email</th>
+                <th scope="col">Name</th>
                 <th scope="col">Street</th>
-                <th scope="col">Number</th>
+                <th scope="col">Internal number</th>
                 <th scope="col">Postal Code</th>
                 <th scope="col">Country</th>
                 <th scope="col">State</th>
@@ -24,11 +23,13 @@
         <tbody>
             @each(address in addresses)
             <tr>
-                <td>{{address.uID}}</td>
-                <td>{{address.uEmail}}</td>
-                <td>{{address.cNumber}}</td>
-                <td>{{address.bank}}</td>
-                <td>{{address.expDate}}</td>
+                <td>{{address.aName}}</td>
+                <td>{{address.street}}</td>
+                <td>{{address.intNumber}}</td>
+                <td>{{address.PC}}</td>
+                <td>{{address.Country}}</td>
+                <td>{{address.State}}</td>
+                <td>{{address.City}}</td>
                 <td>
                     <a href="/deleteAddress" class="btn btn-danger">Remove address</a>
                 </td>
