@@ -1,0 +1,64 @@
+@layout('layouts.userSettings')
+@section('homeMenu')
+
+    <h2>Add a new card</h2>
+
+    <div class="container">
+    <div class="row mt-2">
+        <div class="col-6 offset-3">
+            <form action="/addCards/save" method="POST">
+
+                <div class="form-group">
+                    <label for="">User email</label>
+                    <input type="text" class="form-control" placeholder="{{userVer.Email}}" name="name" required readonly>
+                </div>
+
+                <div class="form-group">
+                <label for="">Brand</label>
+                    <input type="text" class="form-control" placeholder="Brand" name="brand"  required>
+                </div>
+
+                <div class="form-group">
+                    <label for="">Price</label>
+                    <input type="number" class="form-control" placeholder="Price" name="price" required min="0" step=".01">
+                </div>
+
+                <div class="form-group">
+                    <label for="">Description</label>
+                    <input type="text" class="form-control" placeholder="Description" name="description" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="">Rating</label>
+                    <input type="number" class="form-control" placeholder="Rating" name="rating" required min="0" step=".01">
+                </div>
+
+                <div class="form-group">
+                    <label for="">Availability</label>
+                    <input type="text" class="form-control" placeholder="Availability" name="availability" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="">Image</label>
+                    <input type="url" class="form-control" placeholder="Image" name="image" required>
+                </div>
+                
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary">
+                </div>
+                
+            </form>
+            
+            <div class="row mt-2">
+                
+                
+                <div class="float-left">
+                    <button class="btn btn-danger" type="button" onclick="window.location.href='/home'">Back home</button>
+                </div>
+            
+            </div>
+        </>
+            
+    </div>
+</div>
+@endsection

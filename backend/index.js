@@ -174,7 +174,7 @@ app.post('/addProducts/save', (req, res) => {
     var product = {
         Name: req.body.name,
         Brand: req.body.brand,
-        Price: req.body.price,
+        Price: parseFloat(req.body.price),
         Description: req.body.description,
         Rating: req.body.rating,
         Availability: req.body.availability,
@@ -196,7 +196,26 @@ app.post('/addProducts/save', (req, res) => {
 });
 
 app.get('/cards', async(req, res)=>{
-    res.render('cards')
+    console.log("Cards");
+    console.log(userLogin);
+
+    var userVer = userLogin.toString();
+
+    mongo.connect(url, async(err, db) => {
+        if(err) throw err;
+        
+        console.log(userVer);
+        var dB = db.db("tienda");
+        
+        var collectionCards = dB.collection("bank acconts");
+
+        var cards = await collectionCards.find({"uEmail":userVer}).sort({_id:1}).toArray();
+
+        res.render('cards', {
+            userVer,
+            cards: cards
+        })
+    })
 });
 
 
