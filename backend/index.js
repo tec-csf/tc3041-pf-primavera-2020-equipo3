@@ -213,7 +213,6 @@ app.get('/cards', async(req, res)=>{
         console.log(search);
         
         var dB = db.db("tienda");
-        var collectionCards = dB.collection("bank acconts");
 
         var cards = await dB.collection("bank accounts").find(search).sort({_id:1}).toArray();
 
@@ -290,7 +289,7 @@ app.get('/deleteCard', async(req, res)=>{
             var cardDel = card[0];
             console.log(cardDel);
 
-            res.render('/deleteCard/confirm', {
+            res.render('deleteCard', {
                 cardDel
             })
         })
@@ -305,6 +304,7 @@ app.post('/deleteCard/confirm', (req, res)=>{
         Email: userVer
     };
 
+
     MongoClient.connect(url, function(err, db){
         if (err) throw err;
         var dB = db.db("tienda");
@@ -313,6 +313,8 @@ app.post('/deleteCard/confirm', (req, res)=>{
             if (err) throw err;
             
             var userS = user[0];
+
+            console.log(userS._id);
 
             var delCard = {
                 uID: userS._id,
@@ -326,17 +328,43 @@ app.post('/deleteCard/confirm', (req, res)=>{
 
             dB.collection("bank accounts").remove(delCard, function (err, result) {
                if (err) throw err;
-               console.log("\n" + result + "\nCard deleted")
+               console.log("\nCard deleted")
            })
 
-            res.redirect('/cards');
         });
-
+        
     });
 
+    res.redirect('/mainSettings');
 });
-
 //End cards
+
+//Addresses
+app.get('/address', async(req, res)=>{
+    console.log("\nAddresses");
+    console.log(userLogin);
+
+    var userVer = userLogin.toString();
+
+    var search = {
+        uEmail: userVer
+    };
+
+    MongoClient.connect(url, async(err, db)=>{
+        if(err) throw err;
+        console.log(search);
+
+        var dB = db.db("tienda");
+        
+        var addresses = await dB.collection("addresses").find(search).sort({_id:1}).toArray();
+
+        console.log(addresses);
+
+        res.render('address',{
+            addresses: addresses
+        })
+    })
+})
 
 //User logut
 app.get('/logout',async(req, res)=>{

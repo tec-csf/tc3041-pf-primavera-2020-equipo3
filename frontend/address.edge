@@ -1,24 +1,40 @@
-                <div class="form-group">
-                    <label for="">Address ID</label>
-                    <input type="text" class="form-control" placeholder="Ingresa la direccion" name="direccion" value="{{address.aID}}"  required readonly>
-                </div>
+@layout('layouts.userSettings')
+@section('userMenu')
 
-                <div class="form-group">
-                    <label for="">User email</label>
-                    <input type="text" class="form-control" placeholder="Ingresa la direccion" name="direccion" value="{{address.Uemail}}"  required readonly>
-                </div>
+    <h2>Registered addresses</h2>
+        
+    <br><a href='/mainSettings' class="btn btn-warning">Back to settings</a>
 
-                <div class="form-group">
-                    <label for="">Street</label>
-                    <input type="text" class="form-control" placeholder="Ingresa la direccion" name="direccion" value="{{address.Street}}"  required readonly>
-                </div>
+    <button class="btn btn-success" onclick="window.location.href='/addAddress'">Add a new address</button><br><br>
 
-                <div class="form-group">
-                    <label for="">Number</label>
-                    <input type="text" class="form-control" placeholder="Ingresa la direccion" name="direccion" value="{{address.Number}}"  required readonly>
-                </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Address ID</th>
+                <th scope="col">Email</th>
+                <th scope="col">Street</th>
+                <th scope="col">Number</th>
+                <th scope="col">Postal Code</th>
+                <th scope="col">Country</th>
+                <th scope="col">State</th>
+                <th scope="col">City</th>
+                <th scope="col">Options</th>
+            </tr>
+        </thead>
+        <tbody>
+            @each(address in addresses)
+            <tr>
+                <td>{{address.uID}}</td>
+                <td>{{address.uEmail}}</td>
+                <td>{{address.cNumber}}</td>
+                <td>{{address.bank}}</td>
+                <td>{{address.expDate}}</td>
+                <td>
+                    <a href="/deleteAddress" class="btn btn-danger">Remove address</a>
+                </td>
+            </tr>
+            @endeach
+        </tbody>
+    </table>
 
-                <div class="form-group">
-                    <label for="">Email</label>
-                    <input type="text" class="form-control" placeholder="Ingresa la direccion" name="direccion" value="{{address.aID}}"  required readonly>
-                </div>
+@endsection

@@ -72,32 +72,45 @@ var searchBA = {
     uEmail: email
 }
 
-MongoClient.connect(url, async function (err, db) {
-    if (err) throw err;
+MongoClient.connect(url, function (err, db) {
+  if (err) throw err;
+  var dB = db.db("tienda");
 
-    var dB = db.db("tienda");
+  /* dB.collection("users")
+    .find(search)
+    .toArray(function (err, user) {
+      if (err) throw err;
 
-    dB.collection("bank accounts").find(searchBA).toArray(function (err, card) {
+      var userS = user[0];
+
+        console.log(userS._id);
+
+      var delCard = {
+        uID: userS._id,
+        uEmail: userVer,
+        cNumber: cNumber,
+        bank: bank,
+        expDate: expDate,
+      };
+
+      console.log(delCard);
+
+      dB.collection("bank accounts").remove(delCard, function (err, result) {
         if (err) throw err;
+        console.log("\n" + result + "\nCard deleted");
+      });
 
-        var cardDel = card[0];
-        console.log(cardDel);
+    }); */
+    dB.collection("bank accounts").find(searchBA).toArray(function(err, bAcc){
+        if(err) throw err;
+
+        console.log(bAcc[0]);
+
+        var cardID = bAcc._id;
+    
+        console.log("\n"+cardID);
     })
-
-    /* dB.collection("users").find(search).toArray(function (err, user){
-        if (err) throw err;
-
-        var userS = user[0];
-
-        console.log(userS);
-
-        var searchBA = {
-            uEmail: userVer
-        }
-
-        
-    }) */
-})
+});
 
 /* MongoClient.connect(url, async function (err, db) {
     if (err) throw err;
