@@ -1,0 +1,22 @@
+@layout('layouts.userSettings')
+@section('userMenu')
+
+    <h2>{{user.Name}}'s cart</h2>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Product ID</th>
+                <th scope="col">Product name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @each(cart in cartI)
+            <tr>
+                <td>{{cart.pID}}</td>
+                <td>{{cart.pName}}</td>
+            </tr>
+            @endeach
+        </tbody>
+</table>
+@endsection

@@ -1,6 +1,7 @@
 const path = require("path");
 const express = require("express");
 const bodyParser = require("body-parser");
+const passwordHash = require('password-hash');
 
 const app = new express();
 const { config, engine } = require("express-edge");
@@ -39,10 +40,6 @@ app.post('/loginValidate', async(req, res) => {
     var email = req.body.email;
     var password = req.body.passwd;
 
-    console.log(email);
-
-    console.log(password);
-
     userLogin.push(email);
 
     console.log(userLogin);
@@ -56,18 +53,24 @@ app.post('/loginValidate', async(req, res) => {
         collection.findOne({"Email":email}, function(err, doc){
             if(err) throw err;
 
+            console.log(password);
+
+            var passVer = passwordHash.verify(password, doc["Password"]);
+
+            console.log(passVer);
+
             if(doc && doc._id){
-                if (password == doc["Password"]) {
+                if (passVer == true) {
                     //console.log(doc);
                     //var string = encodeURIComponent(doc);
                     //console.log(userSession);
                     console.log("Correct login")
                     res.redirect("/home");
-                }else{
-                    res.send("Invalid login, check your password");
+                }   else{
+                    res.send("Invalid login, check your credentials");
                 }
             }else{
-                res.send("Invalid login, check your email");
+                res.send("Invalid login, check your credentials");
             }
         });
     }); 
@@ -84,11 +87,12 @@ app.get('/newUser', (req, res) => {
 });
 
 app.post('/newUser/save', (req, res) => {
+
     var user = {
         Name: req.body.name,
         LastName: req.body.lname,
         Email: req.body.email,
-        Password: req.body.passwd
+        Password: passwordHash.generate(req.body.passwd)
     };
 
     console.log(user);
@@ -265,7 +269,6 @@ app.post('/addCards/save', (req, res) =>{
             })
 
             res.redirect('/cards');
-            console.log(tarjeta);
         });
     })
 })
@@ -287,7 +290,6 @@ app.get('/deleteCard', async(req, res)=>{
             if (err) throw err;
 
             var cardDel = card[0];
-            console.log(cardDel);
 
             res.render('deleteCard', {
                 cardDel
@@ -328,8 +330,6 @@ app.post('/deleteCard/confirm', (req, res)=>{
             dB.collection("bank accounts").remove(delCard, function(err, result){
                 if (err) throw err;
 
-                console.log(result[0]);
-
                 console.log("\nCard deleted");
             })
 
@@ -359,8 +359,6 @@ app.get('/address', async(req, res)=>{
         var dB = db.db("tienda");
         
         var addresses = await dB.collection("addresses").find(search).sort({_id:1}).toArray();
-
-        console.log(addresses);
 
         res.render('address',{
             addresses: addresses
@@ -431,7 +429,6 @@ app.get('/deleteAddress', async(req, res)=>{
             if (err) throw err;
 
             var address = dir[0];
-            console.log(address);
 
             res.render('deleteAddress', {
                 address
@@ -489,13 +486,8 @@ app.post('/deleteAddress/save', (req, res)=>{
                 City: req.body.city
             }
 
-            console.log("\nDireccion");
-            console.log(dir);
-
             dB.collection("addresses").remove(dir, function(err, result){
                 if (err) throw err;
-
-                console.log(result[0]);
 
                 console.log("Address deleted");
             })
@@ -503,6 +495,45 @@ app.post('/deleteAddress/save', (req, res)=>{
         })
     })
     res.redirect('/mainSettings')
+});
+//Fin settings
+
+//wishlist
+/* app.get('/wishlist', async(req, res)=>{
+    console.log(userLogin);
+
+    var userVer = userLogin.toString();
+
+    MongoClient.connect(url, async(err, db)=>{
+        if (err) throw err;
+
+        var dB = db.db("tienda");
+        var collectionU = dB.collection("users");
+
+
+    })
+}) */
+
+//Cart
+app.get('/cart', async(req, res)=>{
+    
+    var userVer = userLogin.toString();
+
+    var searchU = {
+        uEmail: userVer
+    };
+
+    MongoClient.connect(url, async(err, db)=>{
+        if (err) throw err;
+
+        var dB = db.db("tienda");
+        
+        var cartI = await dB.collection("cart").find(searchU).sort({_id:-1}).toArray();
+
+        res.render('cart', {
+            cartI: cartI
+        })
+    })
 });
 
 //User logut
