@@ -1,5 +1,5 @@
 @layout('layouts.userSettings')
-@section('homeMenu')
+@section('userMenu')
 
     <h2>Add a new card</h2>
 
@@ -10,37 +10,22 @@
 
                 <div class="form-group">
                     <label for="">User email</label>
-                    <input type="text" class="form-control" placeholder="{{userVer.Email}}" name="name" required readonly>
+                    <input type="text" class="form-control" placeholder="{{userVer}}" name="userEmail" required readonly>
                 </div>
 
                 <div class="form-group">
-                <label for="">Brand</label>
-                    <input type="text" class="form-control" placeholder="Brand" name="brand"  required>
+                <label for="">Card Number</label>
+                    <input type="number" class="form-control" placeholder="Card number" name="brand"  required>
                 </div>
 
                 <div class="form-group">
-                    <label for="">Price</label>
-                    <input type="number" class="form-control" placeholder="Price" name="price" required min="0" step=".01">
+                    <label for="">Bank</label>
+                    <input type="text" class="form-control" placeholder="Bank" name="bank" required">
                 </div>
 
                 <div class="form-group">
-                    <label for="">Description</label>
-                    <input type="text" class="form-control" placeholder="Description" name="description" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="">Rating</label>
-                    <input type="number" class="form-control" placeholder="Rating" name="rating" required min="0" step=".01">
-                </div>
-
-                <div class="form-group">
-                    <label for="">Availability</label>
-                    <input type="text" class="form-control" placeholder="Availability" name="availability" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="">Image</label>
-                    <input type="url" class="form-control" placeholder="Image" name="image" required>
+                    <label for="">Expiration date</label>
+                    <input type="month" class="form-control" placeholder="Expiration date" name="expMonth" required min="2000-01" max="2100-12">
                 </div>
                 
                 <div class="form-group">
@@ -53,7 +38,7 @@
                 
                 
                 <div class="float-left">
-                    <button class="btn btn-danger" type="button" onclick="window.location.href='/home'">Back home</button>
+                    <button class="btn btn-danger" type="button" onclick="window.location.href='/cards'">Back to cards</button>
                 </div>
             
             </div>

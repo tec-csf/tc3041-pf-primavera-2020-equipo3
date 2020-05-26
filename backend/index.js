@@ -195,6 +195,8 @@ app.post('/addProducts/save', (req, res) => {
     res.redirect('/home');
 });
 
+
+// Card settings
 app.get('/cards', async(req, res)=>{
     console.log("Cards");
     console.log(userLogin);
@@ -218,6 +220,35 @@ app.get('/cards', async(req, res)=>{
     })
 });
 
+app.get('/addCard', async(req, res)=>{
+    var userVer = userLogin.toString();
+    console.log(userVer);
+
+    res.render('addCard', {
+        userVer
+    })
+});
+
+app.post('/addCards/save', (req, res) =>{
+    
+    var userVer = userLogin.toString();
+
+    MongoClient.connect(url, function(err, db){
+        if(err) throw err;
+
+        var tarjeta = {
+          uEmail: req.body.userEmail,
+          cNumber: parseFloat(req.body.cNumber),
+          bank: req.body.bank,
+          expDate: req.body.expDate,
+        };
+
+        var dB = db.db("tienda");
+        var uID = dB.collection("users").findOne({"Email":userVer}).toArray(err, mainUser);
+
+        console.log(uID);
+    })
+})
 
 //User logut
 app.get('/logout',async(req, res)=>{

@@ -33,49 +33,20 @@ var email = "daniel.roa98@gmail.com";
 var password = "admin1234";
 
 MongoClient.connect(url, function (err, db) {
+    
     if (err) throw err;
 
     var dB = db.db("tienda");
-    var collection = dB.collection("users");
 
-    console.log(email);
-    console.log(password);
+    var search ={
+        Email: email
+    };
 
-    collection
-        .find({
-            Email: email,
-            Password: password
-            //$eq: password
-        }).toArray(function (err, doc) {
-            console.log(doc);
-            console.log(password);
+    dB.collection("users").find(search).toArray(function(err, user) {
+        if(err) throw err;
 
-            if (doc == empty) {
-                console.log("Not in DB");
-            }
+        var user = user[0];
 
-            db.close();
-        });
-
-    // collection.find({
-    //     Email: email
-    // }, {
-    //     $exists: true
-    // }).toArray(function (err, doc) {
-    //     if (doc) {
-    //         //console.log(doc + "\n");
-
-    //         collection.find({Password: password}, {$exists: true}).toArray(function(err, verified){
-    //             if (verified) {
-    //                 console.log(verified);
-    //             } else if (!verified) {
-    //                 console.log("Check your password once more");
-    //             }
-    //         })
-
-    //     } else if (!doc) {
-    //         console.log("Not in DB");
-    //     }
-    //     db.close();
-    // });
+        console.log(user)
+    })
 });
