@@ -29,10 +29,15 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.static(path.join(__dirname, "public")));
 
 //
-var email = "daniel.roa98@gmail.com";
+var email = "a01021960@itesm.mx";
 var password = "admin1234";
+var cNumber = "1234567890098765";
+var bank = "CitiBanamex";
+var expDate = "2020-12";
 
-MongoClient.connect(url, function (err, db) {
+var userVer = email;
+
+/* MongoClient.connect(url, function (err, db) {
     
     if (err) throw err;
 
@@ -47,6 +52,104 @@ MongoClient.connect(url, function (err, db) {
 
         var user = user[0];
 
-        console.log(user)
+        var tarjeta = {
+            uID: user._id,
+            uEmail: email,
+            cNumber: parseFloat(cNumber),
+            bank: bank,
+            expDate: expDate,
+        };
+
+        console.log(tarjeta)
     })
-});
+}); */
+
+var search = {
+    Email: email
+}
+
+var searchBA = {
+    uEmail: email
+}
+
+MongoClient.connect(url, async function (err, db) {
+    if (err) throw err;
+
+    var dB = db.db("tienda");
+
+    dB.collection("bank accounts").find(searchBA).toArray(function (err, card) {
+        if (err) throw err;
+
+        var cardDel = card[0];
+        console.log(cardDel);
+    })
+
+    /* dB.collection("users").find(search).toArray(function (err, user){
+        if (err) throw err;
+
+        var userS = user[0];
+
+        console.log(userS);
+
+        var searchBA = {
+            uEmail: userVer
+        }
+
+        
+    }) */
+})
+
+/* MongoClient.connect(url, async function (err, db) {
+    if (err) throw err;
+
+    var dB = db.db("tienda");
+
+    dB.collection("users").find(search).toArray(function(err, user){
+        if(err) throw err;
+
+        var userS = user[0];
+
+        console.log(user);
+        console.log(userS);
+
+        var cardDel = {
+            uID: userS._id,
+            uEmail: userVer,
+            cNumber: cNumber,
+            bank: bank,
+            expDate: expDate,
+        };
+
+        console.log(cardDel);
+
+    })
+}) */
+
+/* MongoClient.connect(url, async function (err, db) {
+    if (err) throw err;
+
+    var dB = db.db("tienda");
+
+    dB.collection("users").find(search).toArray(function(err, user){
+        if (err) throw err;
+
+        var user = user[0];
+
+        var delCard = {
+            uID: user._id,
+            uEmail: userVer,
+            cNumber: cNumber,
+            bank: bank,
+            expDate: expDate,
+        };
+
+        console.log(delCard);
+
+        dB.collection("bank accounts").deleteOne(delCard, function(err, result){
+            if (err) throw err;
+            console.log("\n"+ result + "\nCard deleted")
+        })
+        
+        console.log(user);
+    });
+}) */

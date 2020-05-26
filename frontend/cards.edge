@@ -11,22 +11,23 @@
         <thead>
             <tr>
                 <th scope="col">User ID</th>
-                <th scope="col">Card ID</th>
+                <th scope="col">Email</th>
                 <th scope="col">Card Number</th>
                 <th scope="col">Bank</th>
                 <th scope="col">Expiration date</th>
+                <th scope="col">Options</th>
             </tr>
         </thead>
         <tbody>
             @each(card in cards)
             <tr>
                 <td>{{card.uID}}</td>
-                <td>{{card.cID}}</td>
-                <td>{{card.cardNumber}}</td>
+                <td>{{card.uEmail}}</td>
+                <td>{{card.cNumber}}</td>
                 <td>{{card.bank}}</td>
                 <td>{{card.expDate}}</td>
                 <td>
-                    <a href="#" class="btn btn-danger">Remove card</a>
+                    <a href="/deleteCard" class="btn btn-danger">Remove card</a>
                 </td>
             </tr>
             @endeach

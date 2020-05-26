@@ -203,18 +203,23 @@ app.get('/cards', async(req, res)=>{
 
     var userVer = userLogin.toString();
 
-    mongo.connect(url, async(err, db) => {
+    var search = {
+        uEmail: userVer
+    };
+
+    MongoClient.connect(url, async(err, db) => {
         if(err) throw err;
         
-        console.log(userVer);
-        var dB = db.db("tienda");
+        console.log(search);
         
+        var dB = db.db("tienda");
         var collectionCards = dB.collection("bank acconts");
 
-        var cards = await collectionCards.find({"uEmail":userVer}).sort({_id:1}).toArray();
+        var cards = await dB.collection("bank accounts").find(search).sort({_id:1}).toArray();
+
+        console.log(cards);
 
         res.render('cards', {
-            userVer,
             cards: cards
         })
     })
@@ -233,22 +238,105 @@ app.post('/addCards/save', (req, res) =>{
     
     var userVer = userLogin.toString();
 
+    var search = {
+        Email: userVer
+    }
+
     MongoClient.connect(url, function(err, db){
         if(err) throw err;
 
-        var tarjeta = {
-          uEmail: req.body.userEmail,
-          cNumber: parseFloat(req.body.cNumber),
-          bank: req.body.bank,
-          expDate: req.body.expDate,
-        };
-
         var dB = db.db("tienda");
-        var uID = dB.collection("users").findOne({"Email":userVer}).toArray(err, mainUser);
 
-        console.log(uID);
+        dB.collection("users").find(search).toArray(function(err,user){
+            if (err) throw err;
+            var user = user[0];
+
+            var tarjeta = {
+                uID: user._id,
+                uEmail: userVer,
+                cNumber: req.body.cNumber,
+                bank: req.body.bank,
+                expDate: req.body.expDate,
+            };
+
+            dB.collection("bank accounts").insertOne(tarjeta, function(err, result){
+                if(err) throw err;
+
+                console.log("Card added");
+            })
+
+            res.redirect('/cards');
+            console.log(tarjeta);
+        });
     })
 })
+
+app.get('/deleteCard', async(req, res)=>{
+    
+    var userVer = userLogin.toString();
+
+    var search = {
+        uEmail: userVer
+    }
+
+    MongoClient.connect(url, async function(err, db){
+        if(err) throw err;
+
+        var dB = db.db("tienda");
+        
+        dB.collection("bank accounts").find(search).toArray(function (err, card) {
+            if (err) throw err;
+
+            var cardDel = card[0];
+            console.log(cardDel);
+
+            res.render('/deleteCard/confirm', {
+                cardDel
+            })
+        })
+    })
+});
+
+app.post('/deleteCard/confirm', (req, res)=>{
+
+    var userVer = userLogin.toString();
+    
+    var search = {
+        Email: userVer
+    };
+
+    MongoClient.connect(url, function(err, db){
+        if (err) throw err;
+        var dB = db.db("tienda");
+        
+        dB.collection("users").find(search).toArray(function(err, user){
+            if (err) throw err;
+            
+            var userS = user[0];
+
+            var delCard = {
+                uID: userS._id,
+                uEmail: userVer,
+                cNumber: req.body.cNumber,
+                bank: req.body.bank,
+                expDate: req.body.expDate,
+            };
+
+            console.log(delCard);
+
+            dB.collection("bank accounts").remove(delCard, function (err, result) {
+               if (err) throw err;
+               console.log("\n" + result + "\nCard deleted")
+           })
+
+            res.redirect('/cards');
+        });
+
+    });
+
+});
+
+//End cards
 
 //User logut
 app.get('/logout',async(req, res)=>{
