@@ -1,0 +1,50 @@
+@layout('layouts.cartVis')
+@section('cartMenu')
+
+<div class="container">
+    <div class="float-left">
+        <button class="btn btn-danger" type="button" onclick="window.location.href='/home'">Cancel</button>
+    </div>
+    <div class="row mt-2">
+    <div class="col-6 offset-3">
+            <form action="/addItem/confirm" method="POST">
+
+                <div>
+                    <input type="image" src="{{item.Image}}"  value="{{item.Image}}" name="itemImage" required readonly>
+                </div>
+                
+                <div class="form-group">
+                    <input type="hidden" class="form-control" placeholder="{{item._id}}" value="{{item._id}}" name="itemID" required readonly>
+                </div>
+
+                <div class="form-group">
+                <label for="">Name</label>
+                    <input type="text" class="form-control" placeholder="{{item.Name}}" value="{{item.Name}}"  name="itemName"  required readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="">Brand</label>
+                    <input type="text" class="form-control" placeholder="{{item.Brand}}" value="{{item.Brand}}" name="bank" required" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="">Price</label>
+                    <input type="number" class="form-control" placeholder="${{item.Price}}" value="{{item.Price}}" name="expDate" required readonly>
+                </div>
+                
+
+                <div class="form-group text-center">
+                    <button class="btn btn-success">Add to cart</button>
+                </div>
+                
+            </form>
+            
+            <div class="row mt-2">
+                
+            
+            </div>
+        </div>
+            
+    </div>
+</div>
+@endsection

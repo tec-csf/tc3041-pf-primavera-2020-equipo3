@@ -12,6 +12,7 @@ const url = "mongodb+srv://equipo3:admin@cluster-1xa1r.gcp.mongodb.net/test?retr
 var str = "";
 
 var userLogin = [];
+var productID = [];
 var port = 4000;
 // Automatically sets view engine and adds dot notation to app.render
 app.use(engine);
@@ -36,6 +37,8 @@ app.get('/login', async (req, res) => {
 app.post('/loginValidate', async(req, res) => {
     
     userLogin = [];
+
+    console.log(req.body.email);
 
     var email = req.body.email;
     var password = req.body.passwd;
@@ -66,7 +69,7 @@ app.post('/loginValidate', async(req, res) => {
                     //console.log(userSession);
                     console.log("Correct login")
                     res.redirect("/home");
-                }   else{
+                }else{
                     res.send("Invalid login, check your credentials");
                 }
             }else{
@@ -113,8 +116,8 @@ app.post('/newUser/save', (req, res) => {
 //  Home Screen
 app.get('/home', async (req, res) => {
 
+
     console.log("Home");
-    console.log(userLogin);
 
     var userVer = userLogin.toString();
 
@@ -123,6 +126,7 @@ app.get('/home', async (req, res) => {
         console.log(userVer);
 
         if (err) throw err;
+
         var dB = db.db("tienda");
         var collectionUsers = dB.collection("users");
 
@@ -499,20 +503,6 @@ app.post('/deleteAddress/save', (req, res)=>{
 //Fin settings
 
 //wishlist
-/*app.get('/wishlist', async(req, res)=>{
-    console.log(userLogin);
-
-    var userVer = userLogin.toString();
-
-    MongoClient.connect(url, async(err, db)=>{
-        if (err) throw err;
-
-        var dB = db.db("tienda");
-        var collectionU = dB.collection("users");
-
-
-    })
-})*/
 app.get('/wishlist', async (req, res) => {
     var userVer = userLogin.toString();
 
@@ -531,10 +521,12 @@ app.get('/wishlist', async (req, res) => {
         })
     })
 });
+
 app.get('/addWishlist', (req, res) => {
     res.render('addWishlist');
-})
-app.get('/addWishlist/:Name', async (req, res) => {
+});
+
+app.get('/addWishlist', async (req, res) => {
 
     const idPed = req.params.Name;
 
@@ -557,7 +549,8 @@ app.get('/addWishlist/:Name', async (req, res) => {
             })
         })
     })
-})
+});
+
 app.post("/addWishlist/save", (req, res) => {
     //var idPed = req.body.Name;
     //console.log(idPed);
@@ -585,7 +578,7 @@ app.post("/addWishlist/save", (req, res) => {
     });
 
     res.redirect('/wishlist');
-})
+});
 
 //Cart
 app.get('/cart', async(req, res)=>{
@@ -608,6 +601,90 @@ app.get('/cart', async(req, res)=>{
         })
     })
 });
+
+app.get('/addToCart/:Name', (req, res)=>{
+    const prodName = req.params.Name;
+
+    const userVer = userLogin.toString();
+
+    MongoClient.connect(url, async function(err, db){
+        if (err) throw err;
+
+        var dB = db.db("tienda");
+
+        var searchP = {
+            Name: prodName
+        };
+        /* var searchU = {
+            Email: userVer
+        } */
+
+        dB.collection("products").find(searchP).toArray(function(err, prodS){
+            if (err) throw err;
+
+            var item = prodS[0];
+
+            console.log(item);
+            res.render('addToCart', {
+                item
+            })
+        })
+    })
+});
+
+app.post('/addItem/confirm', async(req, res)=>{
+    
+    var itemID = req.body.itemID;
+    var prodName = req.body.itemName;
+    var userVer = userLogin.toString();
+
+    MongoClient.connect(url, function(err, db){
+        if (err) throw err;
+
+        var dB = db.db("tienda");
+        var collectionU = dB.collection("users");
+        var collectionP = dB.collection("products");
+
+        var searchU = {
+            Email: userVer
+        };
+        
+        var searchP = {
+            Name: prodName
+        }
+
+        collectionU.find(searchU).toArray(function(err, userS){
+            
+            if (err) throw err;
+            var user = userS[0];
+
+            console.log(user);
+            collectionP.find(searchP).toArray(function(err, prodS){
+                if (err) throw err;
+
+                var prod = prodS[0];
+
+                var cartIns = {
+                    uID: user._id,
+                    pID: prod._id,
+                    uEmail: userVer,
+                    pName: prod.Name
+                };
+
+                console.log(cartIns);
+
+                dB.collection("cart").insertOne(cartIns, function(err, res){
+                    if (err) throw err;
+
+                    console.log("Cart added");
+                })
+                res.redirect('/home');
+            })
+        });
+
+        
+    })
+})
 
 //User logut
 app.get('/logout',async(req, res)=>{
