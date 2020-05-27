@@ -1,0 +1,34 @@
+@layout('layouts.menu')
+@section('homeMenu')
+
+
+<h3>Wishlist</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Image</th>
+            <th scope="col">Product ID</th>
+            <th scope="col">Product name</th>
+            <th scope="col"> <img src="https://img.icons8.com/cotton/30/000000/money.png"/></th>
+        </tr>
+    </thead>
+    <tbody>
+        @each(wishlist in wish)
+        <tr>
+            <td>
+                <img src="{{wishlist.Image}}" width="75" height="75">
+            </td>
+            <td>{{wishlist.pID}}</td>
+            <td>{{wishlist.pName}}</td>
+            <td>
+                <a href="#" class="btn btn-info text-right">
+                    <img src="https://img.icons8.com/ios-filled/30/000000/add-shopping-cart.png"/>
+                </a>
+            </td>
+        </tr>
+
+        @endeach
+    </tbody>
+</table>
+@endsection
