@@ -499,7 +499,7 @@ app.post('/deleteAddress/save', (req, res)=>{
 //Fin settings
 
 //wishlist
-/* app.get('/wishlist', async(req, res)=>{
+/*app.get('/wishlist', async(req, res)=>{
     console.log(userLogin);
 
     var userVer = userLogin.toString();
@@ -512,7 +512,80 @@ app.post('/deleteAddress/save', (req, res)=>{
 
 
     })
-}) */
+})*/
+app.get('/wishlist', async (req, res) => {
+    var userVer = userLogin.toString();
+
+    var searchU = {
+        uEmail: userVer
+    };
+    MongoClient.connect(url, async(err, db)=>{
+        if (err) throw err;
+
+        var dB = db.db("tienda");
+    
+        var wish = await dB.collection("wishlist").find(searchU).sort({_id:-1}).toArray();
+        
+        res.render('wishlist', {
+            wish: wish
+        })
+    })
+});
+app.get('/addWishlist', (req, res) => {
+    res.render('addWishlist');
+})
+app.get('/addWishlist/:Name', async (req, res) => {
+
+    const idPed = req.params.Name;
+
+    mongo.connect(url, async function (err, db) {
+        if (err) throw err;
+
+        var dB = db.db("tienda");
+
+        var search = {
+            Name: idPed
+        };
+
+        dB.collection("products").find(search).toArray(function (err, products) {
+            if (err) throw err;
+            console.log(products[0]);
+            var wish = products[0];
+
+            res.render('addWishlist', {
+                wish
+            })
+        })
+    })
+})
+app.post("/addWishlist/save", (req, res) => {
+    //var idPed = req.body.Name;
+    //console.log(idPed);
+
+    var wishComponentes = {
+        Name: req.body.name,
+        Image: req.body.image
+    };
+    console.log(wishComponentes);
+    mongo.connect(url, function (err, db) {
+        if (err) throw err;
+        const dB = db.db("tienda");
+        /*const bus = {
+            Name: idPed
+        };*/
+
+        //console.log(bus);
+
+        dB.collection("wishlist").insertOne(wishComponentes, function (err, res) {
+            if (err) throw err;
+            console.log('product agregado a wishlist correctamente');
+            db.close();
+        });
+
+    });
+
+    res.redirect('/wishlist');
+})
 
 //Cart
 app.get('/cart', async(req, res)=>{

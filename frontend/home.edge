@@ -1,46 +1,68 @@
 @layout('layouts.menu')
 @section('homeMenu')
+<link rel="stylesheet" type="text/css" href="styles.css">
+<link rel="stylesheet" href="/styles/styles.css">
+<section>
+    <div class = "container">  
+        <div class = "row my-3">
+            <div class = "col-sm-12 col-lg-4 col-md-4 order-lg-1 order-md-2 borde">
+                <h3 class = "text-center">Top Produts</h3>              
+            </div>
+            <div class = "col-sm-12 col-lg-8 col-md-8 order-md-2 order-lg-2 borde">
+                <h3 class = "text-center">Store</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Image</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Brand</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Rating</th>
+                            <th scope="col">Availability</th>
+                            <th scope="col">Options</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @each(product in products)
+                        <tr>
+                            <td>
+                                <img src="{{product.Image}}" width="75" height="75">
+                            </td>
+                            <td>{{product.Name}}</td>
+                            <td>{{product.Brand}}</td>
+                            <td>${{product.Price}}</td>
+                            <td>{{product.Description}}</td>
+                            <td>{{product.Rating}}</td>
+                            <td>{{product.Availability}}</td>
+                            <td>
+                                <a href="#" class="btn btn-info text-right">
+                                    <img src="https://img.icons8.com/ios-filled/30/000000/add-shopping-cart.png"/>
+                                </a>
+                                <a href="/addWishlist/{{product.pID}}" class="btn btn-primary text-right">
+                                    <img src="https://img.icons8.com/pastel-glyph/30/000000/like--v1.png"/>
+                                </a>
+                            </td>
+                        </tr>
+                        @endeach
+                    </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
+</section>
+<style>
+    .borde {
+      border-left: #cdcdcd medium solid;
+      height: 100%;
+      min-height: 100%;
+    }
+    h3{
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 
-<h1>Products</h1>
-<tr>
-    <h3>Welcome back, {{user.Name}}!</h3>
-</tr>
-<table class="table">
-        <thead>
-            <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Brand</th>
-                <th scope="col">Price</th>
-                <th scope="col">Description</th>
-                <th scope="col">Rating</th>
-                <th scope="col">Availability</th>
-                <th scope="col">Image</th>
-                <th scope="col">Options</th>
-            </tr>
-        </thead>
-        <tbody>
-            @each(product in products)
-            <tr>
-                <td>{{product.Name}}</td>
-                <td>{{product.Brand}}</td>
-                <td>${{product.Price}}</td>
-                <td>{{product.Description}}</td>
-                <td>{{product.Rating}}</td>
-                <td>{{product.Availability}}</td>
-                <td>
-                    <img src="{{product.Image}}" width="75" height="75">
-                </td>
-                <td>
-                    <a href="#" class="btn btn-info text-right">
-                        Add to cart
-                    </a>
-                    <a href="#" class="btn btn-primary text-right">
-                        Add to wishlist
-                    </a>
-                </td>
-            </tr>
-            @endeach
-        </tbody>
-</table>
+    }
+
+}
+</style>
 
 @endsection
