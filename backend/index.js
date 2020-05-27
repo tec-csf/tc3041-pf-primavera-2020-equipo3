@@ -540,7 +540,7 @@ app.get('/cart', async(req, res)=>{
 app.get('/logout',async(req, res)=>{
     userLogin = [];
     console.log(userLogin)
-    res.render('login');
+    res.redirect('login');
 })
 
 app.listen(port, () => {
