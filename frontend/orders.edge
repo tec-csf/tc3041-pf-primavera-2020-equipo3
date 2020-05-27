@@ -1,0 +1,26 @@
+@layout('layouts.ordersVis')
+@section('orderMenu')
+
+    <h2>{{user.Name}}'s orders</h2>
+
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Order id</th>
+                <th scope="col">Product name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            @each(order in orders)
+            <tr>
+                <td>{{order._id}}</td>
+                <td>{{order.pName}}</td>
+                <td>${{order.toPay}}</td>
+                <td>{{order.Status}}
+            </tr>
+            @endeach
+        </tbody>
+</table>
+@endsection

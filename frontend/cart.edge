@@ -1,21 +1,35 @@
-@layout('layouts.userSettings')
-@section('userMenu')
+@layout('layouts.cartVis')
+@section('cartMenu')
 
     <h2>{{user.Name}}'s cart</h2>
 
     <table class="table">
-        <thead>
+        <thead class="thead-dark">
             <tr>
-                <th scope="col">Product ID</th>
+                <th scope="col">Image</th>
                 <th scope="col">Product name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Options</th>
             </tr>
         </thead>
         <tbody>
             @each(cart in cartI)
             <tr>
-                <td>{{cart.pID}}</td>
+                <td>
+                    <img src="{{cart.pImage}}" width="75" height="75">
+                </td>
                 <td>{{cart.pName}}</td>
-                
+                <td>${{cart.price}}</td>
+                <td>{{cart.quantity}}
+                <td>
+                    <a href="/deleteItem/{{cart.pName}}" class="btn btn-danger text-right">
+                        Delete
+                    </a>
+                    <a href="/buyItem/{{cart.pName}}" class="btn btn-success text-right">
+                        Buy now!
+                    </a>
+                </td>
             </tr>
             @endeach
         </tbody>

@@ -595,8 +595,10 @@ app.get('/cart', async(req, res)=>{
         var dB = db.db("tienda");
         
         var cartI = await dB.collection("cart").find(searchU).sort({_id:-1}).toArray();
+        var user = await dB.collection("users").findOne({"Email": userVer});
 
         res.render('cart', {
+            user,
             cartI: cartI
         })
     })
@@ -636,7 +638,12 @@ app.post('/addItem/confirm', async(req, res)=>{
     
     var itemID = req.body.itemID;
     var prodName = req.body.itemName;
+
+    var prodQty = req.body.qty;
+
     var userVer = userLogin.toString();
+
+    console.log(prodQty);
 
     MongoClient.connect(url, function(err, db){
         if (err) throw err;
@@ -668,7 +675,10 @@ app.post('/addItem/confirm', async(req, res)=>{
                     uID: user._id,
                     pID: prod._id,
                     uEmail: userVer,
-                    pName: prod.Name
+                    pImage: prod.Image,
+                    pName: prod.Name,
+                    price: prod.Price,
+                    quantity: prodQty
                 };
 
                 console.log(cartIns);
@@ -685,6 +695,245 @@ app.post('/addItem/confirm', async(req, res)=>{
         
     })
 })
+
+app.get('/deleteItem/:pName', (req, res) => {
+    const prodName = req.params.pName;
+    const userVer = userLogin.toString();
+
+    console.log(prodName);
+
+    MongoClient.connect(url, async function (err, db) {
+        if (err) throw err;
+
+        var dB = db.db("tienda");
+        var searchI = {
+            uEmail: userVer,
+            pName: prodName
+        };
+        var searchU = {
+            Email: userVer
+        };
+
+        console.log(searchI);
+
+        dB.collection("users").find(searchU).toArray(function (err, user) {
+            if (err) throw err;
+
+            var user = user[0];
+
+            console.log(user);
+
+            dB.collection("cart").find(searchI).toArray(function (err, cartI) {
+                if (err) throw err;
+
+                var delI = cartI[0];
+
+                console.log(delI);
+                res.render('deleteItem', {
+                    delI
+                })
+            })
+        })
+
+    })
+});
+
+app.post('/deleteItem/confirm', (req, res) => {
+    var userVer = userLogin.toString();
+
+    var cDel = {
+        uEmail: userVer,
+        pName: req.body.pName
+    };
+
+    console.log(cDel);
+
+    MongoClient.connect(url, async function (err, db) {
+        if (err) throw err;
+
+        var dB = db.db("tienda");
+
+        dB.collection("cart").remove(cDel, function (err, result) {
+            if (err) throw err;
+
+            console.log("Removed from cart")
+        })
+    })
+    res.redirect('/cart');
+})
+
+app.get('/buyItem/:pName', (req, res)=>{
+    const prodName = req.params.pName;
+    const userVer = userLogin.toString();
+
+    MongoClient.connect(url, async function(err, db){
+        if (err) throw err;
+
+        var dB = db.db("tienda");
+
+        var searchI = {
+            uEmail: userVer,
+            pName: prodName
+        };
+        var searchU = {
+            Email: userVer
+        };
+        var searchG = {
+            uEmail: userVer
+        };
+
+        dB.collection("users").find(searchU).toArray(function(err, userS){
+            if (err) throw err;
+            var user = userS[0];
+
+            dB.collection("addresses").find(searchG).toArray(function (err, addS) {
+                var add = addS[0];
+
+                console.log(add);
+
+                dB.collection("bank accounts").find(searchG).toArray(function (err, ba) {
+                    var card = ba[0];
+
+                    console.log(card);
+
+                    dB.collection("cart").find(searchI).toArray(function (err, ca) {
+                        var car = ca[0];
+                        console.log(car);
+
+                        res.render('buyItem',{
+                            user,
+                            addS: addS,
+                            ba:ba,
+                            car
+                        })
+                    })
+                })
+            })
+        })
+    })
+
+})
+
+app.post('/buyItem/confirm', (req, res)=>{
+    const prodName = req.body.pName;
+    const aName = req.body.addName;
+    const cNumber = req.body.cNumber;
+
+    const userVer = userLogin.toString();
+
+    console.log(prodName);
+    console.log(aName);
+    console.log(cNumber);
+
+    MongoClient.connect(url, async function(err, db){
+        if (err) throw err;
+
+        var dB = db.db("tienda");
+
+        var searchU={
+            Email: userVer
+        };
+
+        var searchBA = {
+            uEmail: userVer,
+            cNumber: cNumber
+        }
+
+        var searchA = {
+            uEmail: userVer,
+            aName: aName
+        };
+
+        var searchC = {
+            uEmail: userVer,
+            pName: prodName
+        };
+
+        console.log(searchA);
+        console.log(searchBA);
+        console.log(searchC);
+
+        dB.collection("users").find(searchU).toArray(function(err, userS){
+            var user = userS[0];
+
+            console.log(user)
+
+            dB.collection("addresses").find(searchA).toArray(function(err, addS){
+                var add = addS[0];
+
+                console.log(add);
+
+                dB.collection("bank accounts").find(searchBA).toArray(function(err, ba){
+                    var card = ba[0];
+
+                    console.log(card);
+
+                    dB.collection("cart").find(searchC).toArray(function(err, ca){
+                        var car = ca[0];
+                        console.log(car);
+
+                        var total = parseFloat(car.quantity) * parseFloat(car.price);
+
+                        var status = "4-6 weeks thanks to the outbreak";
+
+                        var pedido ={
+                            uID: user._id,
+                            aID: add._id,
+                            cID: card._id,
+                            uEmail: userVer,
+                            aName: add.aName,
+                            pName: car.pName,
+                            toPay: total,
+                            Status: status
+                        }
+
+                        console.log(total);
+                        console.log(pedido);
+
+
+
+                        dB.collection("orders").insertOne(pedido, function(err, outcome){
+                            if (err) throw err;
+
+                            console.log("Order made correctly")
+
+                             res.redirect('/orders')
+                            /* dB.collection("cart").remove(car, function(err, resCart){
+                                console.log("Removed from cart")
+                            }) */
+                        })
+                    })
+                })
+            })
+        })
+    })
+})
+
+//Orders
+app.get('/orders', async(req, res)=>{
+    var userVer = userLogin.toString();
+
+    var searchU ={
+        uEmail: userVer
+    };
+
+    MongoClient.connect(url, async(err, db)=>{
+        if (err) throw err;
+
+        var dB = db.db("tienda");
+
+        var orders = await dB.collection("orders").find(searchU).sort({_id:1}).toArray();
+        var user = await dB.collection("users").findOne({"Email":userVer});
+
+        console.log(orders)
+
+        res.render('orders',{
+            user,
+            orders: orders
+        })
+
+    })
+});
 
 //User logut
 app.get('/logout',async(req, res)=>{

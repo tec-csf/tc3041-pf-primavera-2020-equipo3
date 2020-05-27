@@ -73,35 +73,64 @@ var searchBA = {
     uEmail: email
 }
 
-MongoClient.connect(url, function (err, db) {
+const prodName = Oreo;
+
+MongoClient.connect(url, async function (err, db) {
     if (err) throw err;
+
     var dB = db.db("tienda");
 
-    dB.collection("users").find(search).toArray(function (err, user) {
-        if (err) throw err;
+    var searchU = {
+        Email: userVer
+    };
+    var searchG = {
+        uEmail: userVer
+    };
 
-        var userS = user[0];
+    var searchC = {
+        uEmail: userVer,
+        pName: prodName
+    };
 
-        console.log(userS._id);
+    dB.collection("users").find(searchU).toArray(function (err, userS) {
+        var user = userS[0];
 
-        var delCard = {
-            uID: userS._id,
-            uEmail: userVer,
-            cNumber: cNumber,
-            bank: bank,
-            expDate: expDate,
-        };
+        console.log(user)
 
-        console.log(delCard);
+        dB.collection("addresses").find(searchG).toArray(function (err, addS) {
+            var add = addS[0];
 
-        dB.collection("bank accounts").remove(delCard, function (err, result) {
-            if (err) throw err;
+            console.log(add);
 
-            console.log(result[0]);
+            dB.collection("bank accounts").find(searchG).toArray(function (err, ba) {
+                var card = ba[0];
 
-            console.log("\nCard deleted");
+                console.log(card);
+
+                dB.collection("cart").find(searchC).toArray(function (err, ca) {
+                    var car = ca[0];
+                    console.log(car);
+
+                    var total = parseFloat(car.quantity) * parseFloat(car.price);
+
+                    var status = "4-6 weeks thanks to the outbreak";
+
+                    var pedido = {
+                        uID: user._id,
+                        aID: add._id,
+                        cID: card._id,
+                        uEmail: userVer,
+                        aName: add.aName,
+                        toPay: total,
+                        Status: status
+                    }
+
+                    console.log(total);
+                    console.log(pedido);
+                })
+            })
         })
+    })
+})
 
-    });
-
-});
+console.log(prodName);

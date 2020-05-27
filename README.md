@@ -1,6 +1,6 @@
 # TC3041 Proyecto Final Primavera 2020
 
-# *Tienda virtual*
+# *8-Twelve, your best choice*
 ---
 
 ##### Integrantes:

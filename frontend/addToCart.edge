@@ -14,6 +14,7 @@
                 </div>
                 
                 <div class="form-group">
+                    <label for="">ID</label>
                     <input type="hidden" class="form-control" placeholder="{{item._id}}" value="{{item._id}}" name="itemID" required readonly>
                 </div>
 
@@ -29,9 +30,13 @@
 
                 <div class="form-group">
                     <label for="">Price</label>
-                    <input type="number" class="form-control" placeholder="${{item.Price}}" value="{{item.Price}}" name="expDate" required readonly>
+                    <input type="text" class="form-control" placeholder="${{item.Price}}" value="{{item.Price}}" name="expDate" required readonly>
                 </div>
                 
+                <div class="form-group">
+                    <label for="">Quantity</label>
+                    <input type="number" class="form-control" placeholder="0" value="1" name="qty" min = "1" max="10" required>
+                </div>
 
                 <div class="form-group text-center">
                     <button class="btn btn-success">Add to cart</button>

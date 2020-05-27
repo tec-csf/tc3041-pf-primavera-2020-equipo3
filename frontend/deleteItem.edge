@@ -1,0 +1,45 @@
+@layout('layouts.ordersVis')
+@section('orderMenu')
+
+<div class="container">
+    <div class="float-left">
+        <button class="btn btn-success" type="button" onclick="window.location.href='/cart'">On second thoughts...</button>
+    </div>
+    <div class="row mt-2">
+    <div class="col-6 offset-3 text-center">
+            <form action="/deleteItem/confirm" method="POST">
+
+                <div>
+                    <input type="image" src="{{delI.pImage}}"  value="{{delI.Image}}" name="pImage" height="200" width="200" required readonly>
+                </div>
+                
+                <div class="form-group">
+                    <input type="hidden" class="form-control" placeholder="{{delI.pID}}" value="{{delI.pID}}" name="itemID" required readonly>
+                </div>
+
+                <div class="form-group">
+                <label for="">Name</label>
+                    <input type="text" class="form-control" placeholder="{{delI.pName}}" value="{{delI.pName}}"  name="pName"  required readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="">Price</label>
+                    <input type="number" class="form-control" placeholder="${{delI.price}}" value="${{delI.price}}" name="price" required" readonly>
+                </div>
+
+                <div class="form-group text-center">
+                    <button class="btn btn-danger">Delete from cart</button>
+                </div>
+                
+            </form>
+            
+            <div class="row mt-2">
+                
+            
+            </div>
+        </div>
+            
+    </div>
+</div>
+
+@endsection
