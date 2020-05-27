@@ -56,8 +56,28 @@ Como parte de la entrega final del proyecto, se debe incluir la siguiente inform
 
 *[Falta explicar mas a fondo]*
 
-Como proyecto final, decidimos hacer una tienda en línea donde un usuario pueda realizar las compras que quiera. Dentro de la aplicación web, contamos con las siguientes características:
+Como proyecto final, decidimos hacer una tienda en línea donde un usuario pueda realizar compras con los productos disponibles. Dentro de la aplicación web, contamos con las siguientes características:
 
+* Agregar un producto a un carrito
+* Realizar la compra de un producto
+* Bloqueo del perfil en caso de inactividad de mas de 5 minutos
+* Duplicación de items en el carrito
+* Añadir métodos de pago
+* Lista de los productos mas populares
+
+Para poder llevar a cabo la elaboración de este proyecto, se creó una solución usando JavaScript y las librerías ofrecidas por Node.js. A continuación se pueden ver las librerías utilizadas de Node:
+
+* body-parser
+* edge.js
+* express
+* express-edge
+* express-validator
+* mongodb
+* nodemon
+* password-hash
+* redis
+
+Las librerías de *Redis* y *MongoDB*  se encargan del manejo de su DB correspondiente.
 
 ## 3. Solución
 
@@ -73,11 +93,48 @@ A continuación aparecen descritos los diferentes elementos que forman parte de 
 
 ### 3.3 Frontend
 
-*[Incluya aquí una explicación de la solución utilizada para el frontend del proyecto. No olvide incluir las ligas o referencias donde se puede encontrar información de los lenguajes de programación, frameworks y librerías utilizadas.]*
+Para el frontend, se utilizó una librería de Node llamada **express-edge**. Gracias a esta librería, se puede crear una página web como si se estuvieran manejando documentos de HTML. La diferencia que presentan con un documento de HTML es el uso de *layouts*. Gracias a los layouts se puede crear un documento que se encargue de cargar el contenido de una página que se encuentra en otro sitio.
+Como ejemplo, ingrese a los siguientes documentos [home.edge](./frontend/home.edge) y [menu.edge](./frontend/layouts/menu.edge).
+
+Para poder desplegar la información solicitada, tal y como los productos en la página principal o las tarjetas en los ajustes de los usuarios, se utilizaron procesos ofrecidos por la librería de MongoDB (esto será explicado mas a fondo en la sección **3.4 Backend**).
 
 #### 3.3.1 Lenguaje de programación
+
+El frontend fue programado usando HTML en documentos con la terminación *.edge*, esto permite mandar a llamar la plantilla solicitada por la página al momento que se requiere cambiar de página. Para ver como está mandando a llamar el contenido de una página para que se despliegue se puede ver a continuación:
+
+```
+@!section('homeMenu')
+```
+
+Esto significa que la página que contenga la sección *homeMenu* y que se haya mandado a llamar desde el backend, será cargado en el buscador del usuario. El frontend de la aplicación web está siendo dividido en diferentes layouts, así cada uno maneja una carga distinta.
+Es decir, para el manejo de usuarios, se utiliza algo como lo que puede ser visto en[userSettings.edge](./frontend/layouts/userSettings.edge). Como se puede notar, allí se encuentra la barra de navegación que permite que el usuario pueda moverse entre páginas.
+
+Dentro de las páginas que realizan operaciones de tipo *RESTful*, se carga la página con los datos deseados usando un formato como el siguiente:
+
+```
+{{address.PC}}
+```
+
+Esto manda a llamar la variable con el valor manejado en el backend, así puede ser desplegado correctamente.
+
 #### 3.3.2 Framework
+
+Para el frontend no se utilizó ningún framework, todo fue programado desde cero.
+
 #### 3.3.3 Librerías de funciones o dependencias
+
+Para poder añadirle diseño a la página web, se está utilizando **Bootstrap**. 
+Bootstrap permitió que le dieramos un diseño *básico* al sitio web, pero es porque no se utilizó ningún framework para poder llevar a cabo la interacción con el usuario.
+
+Es importante recalcar, para poder añadir Bootstrap a nuestro proyecto, se utilizó el link de la siguiente manera:
+
+```
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+```
+
+Se vinculó como si fuera un documento .css (**Cascade Style Sheet**) y así se pudo utilizar de manera apropiada en el sitio web.
+
+La documentación oficial de Bootstrap se puede encontrar [aquí](https://getbootstrap.com/docs/4.3/getting-started/introduction/).
 
 ### 3.4 Backend
 
