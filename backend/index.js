@@ -12,7 +12,7 @@ const url = "mongodb+srv://equipo3:admin@cluster-1xa1r.gcp.mongodb.net/test?retr
 var str = "";
 
 var userLogin = [];
-
+var port = 4000;
 // Automatically sets view engine and adds dot notation to app.render
 app.use(engine);
 app.set("views", `../frontend`);
@@ -543,6 +543,6 @@ app.get('/logout',async(req, res)=>{
     res.render('login');
 })
 
-app.listen(4000, () => {
-    console.log('App is running in port 4000')
+app.listen(port, () => {
+    console.log('App is running in port ' + port)
 });
