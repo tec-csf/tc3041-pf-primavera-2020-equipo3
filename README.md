@@ -54,8 +54,6 @@ Como parte de la entrega final del proyecto, se debe incluir la siguiente inform
 
 ## 2. Descripción del proyecto
 
-*[Falta explicar mas a fondo]*
-
 Como proyecto final, decidimos hacer una tienda en línea donde un usuario pueda realizar compras con los productos disponibles. Dentro de la aplicación web, contamos con las siguientes características:
 
 * Agregar un producto a un carrito
