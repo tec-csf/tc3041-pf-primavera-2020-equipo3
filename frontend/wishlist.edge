@@ -8,8 +8,9 @@
     <thead>
         <tr>
             <th scope="col">Image</th>
-            <th scope="col">Product ID</th>
-            <th scope="col">Product name</th>
+            <th scope="col">Product Name</th>
+            <th scope="col">Product Description</th>
+            <th scope="col">Product Price</th>
             <th scope="col"> <img src="https://img.icons8.com/cotton/30/000000/money.png"/></th>
         </tr>
     </thead>
@@ -17,13 +18,17 @@
         @each(wishlist in wish)
         <tr>
             <td>
-                <img src="{{wishlist.Image}}" width="75" height="75">
+                <img src="{{wishlist.pImage}}" width="75" height="75">
             </td>
-            <td>{{wishlist.pID}}</td>
             <td>{{wishlist.pName}}</td>
+            <td>{{wishlist.Description}}</td>
+            <td>{{wishlist.price}}</td>
             <td>
-                <a href="#" class="btn btn-info text-right">
-                    <img src="https://img.icons8.com/ios-filled/30/000000/add-shopping-cart.png"/>
+                <a href="/deleteItem/{{wishlist.pName}}" class="btn btn-danger text-right">
+                    Delete
+                </a>
+                <a href="/buyItem/{{wishlist.pName}}" class="btn btn-success text-right">
+                    Buy now!
                 </a>
             </td>
         </tr>

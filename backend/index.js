@@ -503,10 +503,10 @@ app.post('/deleteAddress/save', (req, res)=>{
 //Fin settings
 
 //wishlist
-app.get('/wishlist', async (req, res) => {
+app.get('/wishlist', async(req, res) => {
     var userVer = userLogin.toString();
 
-    var searchU = {
+    var searchE = {
         uEmail: userVer
     };
     MongoClient.connect(url, async(err, db)=>{
@@ -514,70 +514,99 @@ app.get('/wishlist', async (req, res) => {
 
         var dB = db.db("tienda");
     
-        var wish = await dB.collection("wishlist").find(searchU).sort({_id:-1}).toArray();
-        
+        var wish = await dB.collection("wishlist").find(searchE).sort({_id:-1}).toArray();
+        var user = await dB.collection("users").findOne({"Email": userVer});
         res.render('wishlist', {
+            user,
             wish: wish
         })
     })
 });
 
-app.get('/addWishlist', (req, res) => {
-    res.render('addWishlist');
-});
 
-app.get('/addWishlist', async (req, res) => {
-
-    const idPed = req.params.Name;
-
-    mongo.connect(url, async function (err, db) {
+app.get('/addWishlist/:Name', (req, res) => {
+    const prodName = req.params.Name;
+    const userVer = userLogin.toString();
+    MongoClient.connect(url, async function (err, db) {
         if (err) throw err;
 
         var dB = db.db("tienda");
 
-        var search = {
-            Name: idPed
+        var searchP = {
+            Name: prodName
         };
 
-        dB.collection("products").find(search).toArray(function (err, products) {
+        dB.collection("products").find(searchP).toArray(function (err, prodS) {
             if (err) throw err;
-            console.log(products[0]);
-            var wish = products[0];
-
+            //console.log(products[0]);
+            var itemW = prodS[0];
+            console.log(itemW);
             res.render('addWishlist', {
-                wish
+                itemW
             })
         })
     })
 });
 
-app.post("/addWishlist/save", (req, res) => {
-    //var idPed = req.body.Name;
-    //console.log(idPed);
+app.post("/addWishlist/save", async(req, res) => {
+    var itemID = req.body.itemID;
+    var prodName = req.body.itemName;
 
-    var wishComponentes = {
-        Name: req.body.name,
-        Image: req.body.image
-    };
-    console.log(wishComponentes);
-    mongo.connect(url, function (err, db) {
+    //var prodQty = req.body.qty;
+
+    var userVer = userLogin.toString();
+
+    //console.log(prodQty);
+
+    MongoClient.connect(url, function(err, db){
         if (err) throw err;
-        const dB = db.db("tienda");
-        /*const bus = {
-            Name: idPed
-        };*/
 
-        //console.log(bus);
+        var dB = db.db("tienda");
+        var collectionU = dB.collection("users");
+        var collectionP = dB.collection("products");
 
-        dB.collection("wishlist").insertOne(wishComponentes, function (err, res) {
+        var searchU = {
+            Email: userVer
+        };
+        
+        var searchP = {
+            Name: prodName
+        }
+
+        collectionU.find(searchU).toArray(function(err, userS){
+            
             if (err) throw err;
-            console.log('product agregado a wishlist correctamente');
-            db.close();
+            var user = userS[0];
+
+            console.log(user);
+            collectionP.find(searchP).toArray(function(err, prodS){
+                if (err) throw err;
+
+                var prod = prodS[0];
+
+                var wishadded = {
+                    uID: user._id,
+                    pID: prod._id,
+                    uEmail: userVer,
+                    pImage: prod.Image,
+                    pName: prod.Name,
+                    description:prod.Description,
+                    price: prod.Price
+                };
+
+                console.log(wishadded);
+
+                dB.collection("wishlist").insertOne(wishadded, function(err, res){
+                    if (err) throw err;
+
+                    console.log("Added");
+                })
+                res.redirect('/wishlist');
+            })
         });
 
-    });
-
-    res.redirect('/wishlist');
+        
+    })
 });
 
 //Cart
@@ -897,10 +926,10 @@ app.post('/buyItem/confirm', (req, res)=>{
 
                             console.log("Order made correctly")
 
-                             res.redirect('/orders')
-                            /* dB.collection("cart").remove(car, function(err, resCart){
+                            dB.collection("cart").remove(car, function(err, resCart){
                                 console.log("Removed from cart")
-                            }) */
+                                res.redirect('/orders')
+                            }) 
                         })
                     })
                 })
