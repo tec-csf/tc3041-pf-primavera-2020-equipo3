@@ -607,13 +607,13 @@ app.get('/wishlist', async (req, res) => {
 });
 
 
-app.get('/addWishlist/:Name', (req, res) => {
+app.get('/addWishlist/:Name', async (req, res) => {
 
-    var session = await validateSession(userLogin.toString());
+    /* var session = await validateSession(userLogin.toString());
     if (!session.active) {
         userLogin = [];
         return res.redirect('login');
-    }
+    } */
 
     const prodName = req.params.Name;
     const userVer = userLogin.toString();
@@ -733,11 +733,11 @@ app.get('/cart', async (req, res) => {
 
 app.get('/addToCart/:Name', (req, res) => {
 
-    var session = await validateSession(userLogin.toString());
+    /* var session = await validateSession(userLogin.toString());
     if (!session.active) {
         userLogin = [];
         return res.redirect('login');
-    }
+    } */
 
     const prodName = req.params.Name;
 
@@ -832,11 +832,11 @@ app.post('/addItem/confirm', async (req, res) => {
 
 app.get('/deleteItem/:pName', (req, res) => {
 
-    var session = await validateSession(userLogin.toString());
+    /* var session = await validateSession(userLogin.toString());
     if (!session.active) {
         userLogin = [];
         return res.redirect('login');
-    }
+    } */
 
     const prodName = req.params.pName;
     const userVer = userLogin.toString();
@@ -904,11 +904,11 @@ app.post('/deleteItem/confirm', (req, res) => {
 })
 
 app.get('/buyItem/:pName', (req, res) => {
-    var session = await validateSession(userLogin.toString());
+    /* var session = await validateSession(userLogin.toString());
     if (!session.active) {
         userLogin = [];
         return res.redirect('login');
-    }
+    } */
 
     const prodName = req.params.pName;
     const userVer = userLogin.toString();
