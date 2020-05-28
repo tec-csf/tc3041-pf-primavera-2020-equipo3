@@ -86,12 +86,13 @@ A continuación aparecen descritos los diferentes elementos que forman parte de 
 ### 3.1 Modelos de *bases de datos* utilizados
 
 *[Incluya aquí una explicación del análisis realizado y la justificación de los modelos de *bases de datos* seleccionados. Incluya todo lo que considere necesario para que una persona sin conocimientos técnicos pueda entender de que trata su solución.]*
-MongoDb
-Redus
+
+MongoDb: lo utilizamos por que es muy facil de usar y eficiente para la forma en la que queremos guardar los datos.
+Redis: sirve para mantener las sesiones activas y actualizadas.
 
 ### 3.2 Arquitectura de la solución
+![](Arquitectura/pfUML.png)
 
-![alt text](https://app.lucidchart.com/documents/edit/1ce79f92-d5bf-4ac3-9b39-572fe39b308f/0_0?beaconFlowId=AB30EFB170A7E27D#?folder_id=home&browser=icon)
 
 ### 3.3 Frontend
 
@@ -169,7 +170,37 @@ La documentación oficial de Bootstrap se puede encontrar [aquí](https://getboo
 ## 3.6 Pasos a seguir para utilizar el proyecto
 
 *[Incluya aquí una guía paso a paso para poder utilizar el proyecto, desde la clonación del repositorio hasta el despliegue de la solución en una plataforma en la nube.]*
+1. Primero, se necesita clonar el repositorio, con el siguiente comando:
+   ```
+    git clone https://github.com/tec-csf/tc3041-pf-primavera-2020-equipo3.git
+    ```
+    Una vez que se haya descargado el repositorio, se tendrán las siguientes carpetas:
+     - Arquitectura	      
+     - backend
+     - frontend
 
+    También el README.md que se encuentra en la carpeta principal.
+  2. Es necesario tener instalado Node.js para poder correr esta aplicacion 
+    -https://nodejs.org/es/download/
+  3.Una vez descargado eh instaldo, entrar desde una terminarl a la ubicacion del archivo
+  `
+  cd tc3041-t3-primavera-2020-equipo3\backend
+  `
+  3.1 Correr el siguiente comando para asegurarse de tener instaladas todos los paquetes y dependencias de Node necesarias
+  `
+  npm install
+  `
+  3.2 Finalmente para correr el proyecto usar el comando:
+  `
+  npm start
+  `
+  4. Desde su browser entrar a:
+  `
+  localhost:4000
+  `
+  Esto lo va a llevar a la pagina de inicio de usario donde puede entrar con un usuario existente o ir a crear uno.
 ## 4. Referencias
 
-*[Incluya aquí las referencias a sitios de interés, datasets y cualquier otra información que haya utilizado para realizar el proyecto y que le puedan ser de utilidad a otras personas que quieran usarlo como referencia]*
+https://edge.adonisjs.com/
+https://docs.mongodb.com/
+https://redis.io/documentation
