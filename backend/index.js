@@ -963,7 +963,16 @@ app.get('/orders', async(req, res)=>{
 
     })
 });
+//Top Porducts
+/*app.get('/pedido', async (req, res) => {
+    var numDat = 5;
+    MongoClient.connect(url, async(err, db)=>{
+        if (err) throw err;
 
+        var dB = db.db("tienda");
+
+    })
+})*/
 //User logut
 app.get('/logout',async(req, res)=>{
     userLogin = [];
