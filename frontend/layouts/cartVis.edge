@@ -9,7 +9,7 @@
 </head>
 
 <header>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
   <a class="navbar-brand" href="#">8 Twelve</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -21,7 +21,7 @@
       <a class="nav-item nav-link active" href="/cart">Cart</a>
       <a class="nav-item nav-link" href="/orders">Orders</a>
       <a class="nav-item nav-link" href="/mainSettings">User settings</a>
-      <a class="nav-item nav-link" href="/logout">Logout</a>
+     <a class="nav-item nav-link btn btn-sm btn-danger text-dark mr-sm-2 navbar-right" href="/logout">Logout</a>
     </div>
   </div>
 </nav>
@@ -32,6 +32,8 @@
         <div class="row mt-2">
             <div class="col-sm-12">
                
+              <br><br>
+
                 @!section('cartMenu')
 
             </div>
