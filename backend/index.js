@@ -897,10 +897,10 @@ app.post('/buyItem/confirm', (req, res)=>{
 
                             console.log("Order made correctly")
 
-                             res.redirect('/orders')
-                            /* dB.collection("cart").remove(car, function(err, resCart){
+                            dB.collection("cart").remove(car, function(err, resCart){
                                 console.log("Removed from cart")
-                            }) */
+                                res.redirect('/orders')
+                            }) 
                         })
                     })
                 })
