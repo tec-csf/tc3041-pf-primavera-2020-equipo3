@@ -1,0 +1,76 @@
+[{
+  "_id": {
+    "$oid": "5ecee3319d4cbf24109c7262"
+  },
+  "uID": {
+    "$oid": "5ecdd3d172cc9161f118f919"
+  },
+  "pID": {
+    "$oid": "5ecdeeed9106cd02602a83f7"
+  },
+  "uEmail": "a01021960@itesm.mx",
+  "pImage": "https://www.chedraui.com.mx/medias/7506174513382-00-CH1200Wx1200H?context=bWFzdGVyfHJvb3R8MTk4NzEyfGltYWdlL2pwZWd8aDBkL2hkZi8xMDI1MDg5NjExMzY5NC5qcGd8OThmMTI5NWEzZGYwZTRlNWQzYzk4YjNjZGY3OWM0ZDE1OTYxMzRjZmE0YTE2OWQ5ZGI0ODI5MTkzYjA0M2QwMQ",
+  "pName": "Whiskas Gatitos",
+  "price": 99,
+  "quantity": "3"
+},{
+  "_id": {
+    "$oid": "5ecee38ba796d42c98374d8d"
+  },
+  "uID": {
+    "$oid": "5ecdd3d172cc9161f118f919"
+  },
+  "pID": {
+    "$oid": "5ecdf4349106cd02602a83fb"
+  },
+  "uEmail": "a01021960@itesm.mx",
+  "pImage": "https://http2.mlstatic.com/spray-desinfectante-multiusos-trigger-650ml-lysol-D_NQ_NP_704235-MLM31905439743_082019-F.jpg",
+  "pName": "Desinfectante Lysol multiusos en spray 650 ml",
+  "price": 60,
+  "quantity": "4"
+},{
+  "_id": {
+    "$oid": "5ecee821ed02965e749611ff"
+  },
+  "uID": {
+    "$oid": "5ecee3d2a796d42c98374d8e"
+  },
+  "pID": {
+    "$oid": "5ecdf1f79106cd02602a83f9"
+  },
+  "uEmail": "admin@demo.com",
+  "pImage": "https://www.heb.com.mx/media/catalog/product/cache/ed72a15eade0bd3e655f29bdde636541/g/a/galleta-chips-ahoy-regular-266-gr400797_x1.jpg",
+  "pName": "Galleta Nabisco Chips Ahoy Con Chispas D",
+  "price": 26.4,
+  "quantity": "3"
+},{
+  "_id": {
+    "$oid": "5ecef1db5702095ec4870d17"
+  },
+  "uID": {
+    "$oid": "5ecdd3d172cc9161f118f919"
+  },
+  "pID": {
+    "$oid": "5ecded3b9106cd02602a83f3"
+  },
+  "uEmail": "a01021960@itesm.mx",
+  "pImage": "https://http2.mlstatic.com/D_NQ_NP_885148-MLM31368244199_072019-V.jpg",
+  "pName": "Cereal Quaker Oatmeal Squares",
+  "price": 64.5,
+  "quantity": "4"
+},{
+  "_id": {
+    "$oid": "5ecf20914f4f68483401229b"
+  },
+  "uID": {
+    "$oid": "5ecdeb359106cd02602a83f2"
+  },
+  "pID": {
+    "$oid": "5ecc64c57e01942e0f228a99"
+  },
+  "uEmail": "a01024192@itesm.mx",
+  "pImage": "https://images-na.ssl-images-amazon.com/images/I/513LGJisOgL.jpg",
+  "pName": "Oreo",
+  "price": 29.99,
+  "quantity": "1"
+}]

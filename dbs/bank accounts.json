@@ -1,0 +1,34 @@
+[{
+  "_id": {
+    "$oid": "5eceeb70877064630835f3be"
+  },
+  "uID": {
+    "$oid": "5ecee3d2a796d42c98374d8e"
+  },
+  "uEmail": "admin@demo.com",
+  "cNumber": "12345678998765",
+  "bank": "AMEX",
+  "expDate": "2021-02"
+},{
+  "_id": {
+    "$oid": "5ecef7564427eb40688c5fad"
+  },
+  "uID": {
+    "$oid": "5ecdd3d172cc9161f118f919"
+  },
+  "uEmail": "a01021960@itesm.mx",
+  "cNumber": "564738291010293",
+  "bank": "BBVA",
+  "expDate": "2021-09"
+},{
+  "_id": {
+    "$oid": "5ecefe2b0c8e957fe979b74f"
+  },
+  "uID": {
+    "$oid": "5ecefddc0c8e957fe979b74e"
+  },
+  "uEmail": "danielroa98@outlook.com",
+  "cNumber": "0806005961357497",
+  "bank": "CitiBanamex",
+  "expDate": "2025-12"
+}]

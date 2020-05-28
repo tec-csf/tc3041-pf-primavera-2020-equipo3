@@ -1,0 +1,100 @@
+[{
+  "_id": {
+    "$oid": "5ecc64c57e01942e0f228a99"
+  },
+  "Name": "Oreo",
+  "Brand": "Nabisco",
+  "Price": 29.99,
+  "Description": "Delicious cookies in order to enjoy the quarantine.",
+  "Rating": "4.5",
+  "Availability": "High",
+  "Image": "https://images-na.ssl-images-amazon.com/images/I/513LGJisOgL.jpg"
+},{
+  "_id": {
+    "$oid": "5ecded3b9106cd02602a83f3"
+  },
+  "Name": "Cereal Quaker Oatmeal Squares",
+  "Brand": "Quaker",
+  "Price": 64.5,
+  "Description": "Deliciosa y crujiente mezcla de cereales con avena Quaker® de grano entero y un toque de azúcar mascabado. ",
+  "Rating": "5",
+  "Availability": "Medium",
+  "Image": "https://http2.mlstatic.com/D_NQ_NP_885148-MLM31368244199_072019-V.jpg"
+},{
+  "_id": {
+    "$oid": "5ecdee719106cd02602a83f5"
+  },
+  "Name": "Waffles Eggo",
+  "Brand": "Kellogg's ",
+  "Price": 60,
+  "Description": "Los waffles Kelloggs Eggo son alimentos congelados fáciles de preparar para que disfrutes de un desayuno nutritivo y delicioso.",
+  "Rating": "5",
+  "Availability": "Low",
+  "Image": "https://ipcdn.freshop.com/resize?url=https://images.freshop.com/00038000402609/4ff144fa572e4051f846315aca19353e_large.png&width=512&type=webp&quality=40"
+},{
+  "_id": {
+    "$oid": "5ecdeeed9106cd02602a83f7"
+  },
+  "Name": "Whiskas Gatitos",
+  "Brand": "Whiskas",
+  "Price": 99,
+  "Description": "Whiskas Gatitos Carne 1.4kg",
+  "Rating": "5",
+  "Availability": "Medium",
+  "Image": "https://www.chedraui.com.mx/medias/7506174513382-00-CH1200Wx1200H?context=bWFzdGVyfHJvb3R8MTk4NzEyfGltYWdlL2pwZWd8aDBkL2hkZi8xMDI1MDg5NjExMzY5NC5qcGd8OThmMTI5NWEzZGYwZTRlNWQzYzk4YjNjZGY3OWM0ZDE1OTYxMzRjZmE0YTE2OWQ5ZGI0ODI5MTkzYjA0M2QwMQ"
+},{
+  "_id": {
+    "$oid": "5ecdf18d9106cd02602a83f8"
+  },
+  "Name": "Pouch Whiskas Soufflé Gatitos Salmón 85gr",
+  "Brand": "Whiskas",
+  "Price": 10,
+  "Description": "Pouch Whiskas Soufflé Gatitos Salmón 85gr",
+  "Rating": "5",
+  "Availability": "Low",
+  "Image": "https://http2.mlstatic.com/whiskas-gatitos-doce-sobres-surtidos-salmon-res-atun-D_NQ_NP_910122-MLM41733825293_052020-F.jpg"
+},{
+  "_id": {
+    "$oid": "5ecdf1f79106cd02602a83f9"
+  },
+  "Name": "Galleta Nabisco Chips Ahoy Con Chispas D",
+  "Brand": "Chips Ahoy",
+  "Price": 26.4,
+  "Description": "Galletas Nabisco Chips Ahoy con Chispas de Chocolate 266 Gramos",
+  "Rating": "5",
+  "Availability": "High",
+  "Image": "https://www.heb.com.mx/media/catalog/product/cache/ed72a15eade0bd3e655f29bdde636541/g/a/galleta-chips-ahoy-regular-266-gr400797_x1.jpg"
+},{
+  "_id": {
+    "$oid": "5ecdf33f9106cd02602a83fa"
+  },
+  "Name": "Leche Alpura Pasteur Entera 1 Lt",
+  "Brand": "Alpura",
+  "Price": 17.75,
+  "Description": "Leche Alpura Pasteur Entera 1 Lt Tipo Entera",
+  "Rating": "4",
+  "Availability": "High",
+  "Image": "https://www.superama.com.mx/Content/images/products/img_large/0750105590003L.jpg"
+},{
+  "_id": {
+    "$oid": "5ecdf4349106cd02602a83fb"
+  },
+  "Name": "Desinfectante Lysol multiusos en spray 650 ml",
+  "Brand": "Lysol",
+  "Price": 60,
+  "Description": "Desinfectante Lysol multiusos en spray 650 ml",
+  "Rating": "2",
+  "Availability": "Low",
+  "Image": "https://http2.mlstatic.com/spray-desinfectante-multiusos-trigger-650ml-lysol-D_NQ_NP_704235-MLM31905439743_082019-F.jpg"
+},{
+  "_id": {
+    "$oid": "5ecdf5e99106cd02602a83fc"
+  },
+  "Name": "Papel higienico Petalo Ultra Care 18x240",
+  "Brand": "Petalo",
+  "Price": 97,
+  "Description": "Papel higienico Petalo Ultra Care 18 rollos con 240 hojas dobles",
+  "Rating": "5",
+  "Availability": "Low",
+  "Image": "https://www.chedraui.com.mx/medias/7501943493742-00-CH1200Wx1200H?context=bWFzdGVyfHJvb3R8MjU2OTM4fGltYWdlL2pwZWd8aDRhL2hiMS85MTk2NTE4Mzc1NDU0LmpwZ3wyNTZlMTJjNzA5ZmUzMmZmYWY3NDA0ODE4YTFiYTg5Nzc5MDU4Njk5ZjAzOWQ4YWIxNzRjODA3MGFlNzQ3ZDgy"
+}]

@@ -143,6 +143,19 @@ La documentación oficial de Bootstrap se puede encontrar [aquí](https://getboo
 
 *[Incluya aquí una explicación de la solución utilizada para el backend del proyecto. No olvide incluir las ligas o referencias donde se puede encontrar información de los lenguajes de programación, frameworks y librerías utilizadas.]*
 
+La solución en el backend se programó en JavaScript, esta compuesta por las siguientes librerías de Node JS:
+
+* body-parser
+* edge.js
+* express
+* express-edge
+* express-validator
+* mongodb
+* nodemon
+* password-hash
+* redis
+
+
 #### 3.4.1 Lenguaje de programación
 #### 3.4.2 Framework
 #### 3.4.3 Librerías de funciones o dependencias
@@ -174,31 +187,43 @@ La documentación oficial de Bootstrap se puede encontrar [aquí](https://getboo
    ```
     git clone https://github.com/tec-csf/tc3041-pf-primavera-2020-equipo3.git
     ```
+
     Una vez que se haya descargado el repositorio, se tendrán las siguientes carpetas:
      - Arquitectura	      
      - backend
      - frontend
+     - DBs
 
     También el README.md que se encuentra en la carpeta principal.
+
   2. Es necesario tener instalado Node.js para poder correr esta aplicacion 
-    -https://nodejs.org/es/download/
-  3.Una vez descargado eh instaldo, entrar desde una terminarl a la ubicacion del archivo
+
+    https://nodejs.org/es/download/
+
+  3. Una vez descargado e instalado, entrar desde una terminal a la ubicación de la siguiente carpeta:
+
   `
   cd tc3041-t3-primavera-2020-equipo3\backend
   `
-  3.1 Correr el siguiente comando para asegurarse de tener instaladas todos los paquetes y dependencias de Node necesarias
-  `
-  npm install
-  `
-  3.2 Finalmente para correr el proyecto usar el comando:
-  `
-  npm start
-  `
-  4. Desde su browser entrar a:
+
+- Correr el siguiente comando para asegurarse de tener instaladas todos los paquetes y dependencias de Node necesarias
+    `
+    npm install
+    `
+
+ - Finalmente para correr el proyecto usar el siguiente comando en la carpeta del backend:
+    `
+    npm start
+    `
+
+4. Desde su buscador entrar a la dirección:
+
   `
   localhost:4000
   `
-  Esto lo va a llevar a la pagina de inicio de usario donde puede entrar con un usuario existente o ir a crear uno.
+
+- Este último comando lo va a llevar a la pagina de inicio donde puede entrar con un usuario existente o crear uno nuevo.
+
 ## 4. Referencias
 
 https://edge.adonisjs.com/

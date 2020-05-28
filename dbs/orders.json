@@ -1,0 +1,91 @@
+[{
+  "_id": {
+    "$oid": "5ecefb54d32c2f61d4b109a1"
+  },
+  "uID": {
+    "$oid": "5ecdd3d172cc9161f118f919"
+  },
+  "aID": {
+    "$oid": "5ecef7704427eb40688c5fae"
+  },
+  "cID": {
+    "$oid": "5ecef7564427eb40688c5fad"
+  },
+  "uEmail": "a01021960@itesm.mx",
+  "aName": "Home",
+  "pName": "Desinfectante Lysol multiusos en spray 650 ml",
+  "toPay": 240,
+  "Status": "4-6 weeks thanks to the outbreak"
+},{
+  "_id": {
+    "$oid": "5ecefcbce4b63d28f04b1054"
+  },
+  "uID": {
+    "$oid": "5ecee3d2a796d42c98374d8e"
+  },
+  "aID": {
+    "$oid": "5eceeba2877064630835f3bf"
+  },
+  "cID": {
+    "$oid": "5eceeb70877064630835f3be"
+  },
+  "uEmail": "admin@demo.com",
+  "aName": "College",
+  "pName": "Galleta Nabisco Chips Ahoy Con Chispas D",
+  "toPay": 79.19999999999999,
+  "Status": "4-6 weeks thanks to the outbreak"
+},{
+  "_id": {
+    "$oid": "5ecefea60c8e957fe979b753"
+  },
+  "uID": {
+    "$oid": "5ecefddc0c8e957fe979b74e"
+  },
+  "aID": {
+    "$oid": "5ecefe650c8e957fe979b750"
+  },
+  "cID": {
+    "$oid": "5ecefe2b0c8e957fe979b74f"
+  },
+  "uEmail": "danielroa98@outlook.com",
+  "aName": "Home",
+  "pName": "Leche Alpura Pasteur Entera 1 Lt",
+  "toPay": 177.5,
+  "Status": "4-6 weeks thanks to the outbreak"
+},{
+  "_id": {
+    "$oid": "5eceff19131c0d3ba4c6fca2"
+  },
+  "uID": {
+    "$oid": "5ecefddc0c8e957fe979b74e"
+  },
+  "aID": {
+    "$oid": "5ecefe650c8e957fe979b750"
+  },
+  "cID": {
+    "$oid": "5ecefe2b0c8e957fe979b74f"
+  },
+  "uEmail": "danielroa98@outlook.com",
+  "aName": "Home",
+  "pName": "Cereal Quaker Oatmeal Squares",
+  "toPay": 258,
+  "Status": "4-6 weeks thanks to the outbreak"
+},{
+  "_id": {
+    "$oid": "5ecfb4a3f0a8ff0052692769"
+  },
+  "uID": {
+    "$oid": "5ecdd3d172cc9161f118f919"
+  },
+  "aID": {
+    "$oid": "5ecef7704427eb40688c5fae"
+  },
+  "cID": {
+    "$oid": "5ecef7564427eb40688c5fad"
+  },
+  "uEmail": "a01021960@itesm.mx",
+  "aName": "Home",
+  "pName": "Waffles Eggo",
+  "toPay": 360,
+  "Status": "4-6 weeks thanks to the outbreak"
+}]

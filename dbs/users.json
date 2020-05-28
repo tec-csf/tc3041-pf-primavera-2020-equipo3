@@ -1,0 +1,49 @@
+[{
+  "_id": {
+    "$oid": "5ecdd3d172cc9161f118f919"
+  },
+  "Name": "Daniel",
+  "LastName": "Roa",
+  "Email": "a01021960@itesm.mx",
+  "Password": "sha1$78b95433$1$c305a3b45dcbc72ddbc843fd0c9dd8346e9c0d04"
+},{
+  "_id": {
+    "$oid": "5ecde06de64f2245346cebc5"
+  },
+  "Name": "Julio",
+  "LastName": "Villazon",
+  "Email": "a01370190@itesm.mx",
+  "Password": "sha1$06ec3bda$1$3239f934331330a703b5a9cae174b3054a63f7c2"
+},{
+  "_id": {
+    "$oid": "5ecdeb359106cd02602a83f2"
+  },
+  "Name": "Camila",
+  "LastName": "Rovirosa",
+  "Email": "a01024192@itesm.mx",
+  "Password": "sha1$914996f4$1$82933774841e15f9fa6965a61a31722a49b964fa"
+},{
+  "_id": {
+    "$oid": "5ecee3d2a796d42c98374d8e"
+  },
+  "Name": "a",
+  "LastName": "Dmin",
+  "Email": "admin@demo.com",
+  "Password": "sha1$340518c9$1$85da3be2e1fb43599a1a4564d4bea95fe10cf96c"
+},{
+  "_id": {
+    "$oid": "5ecefddc0c8e957fe979b74e"
+  },
+  "Name": "Daniel",
+  "LastName": "Roa",
+  "Email": "danielroa98@outlook.com",
+  "Password": "sha1$cd826e1f$1$0bf9f328f0c2b09d1f40ce9b7eec9954ef180cb0"
+},{
+  "_id": {
+    "$oid": "5ecf20970bac822ac803da35"
+  },
+  "Name": "Prueba",
+  "LastName": "PF",
+  "Email": "prueba@pf.com",
+  "Password": "sha1$25e3647c$1$ad4582a43cc924ff155fb0939d10d2d736087cbc"
+}]

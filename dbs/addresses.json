@@ -1,0 +1,46 @@
+[{
+  "_id": {
+    "$oid": "5eceeba2877064630835f3bf"
+  },
+  "uID": {
+    "$oid": "5ecee3d2a796d42c98374d8e"
+  },
+  "uEmail": "admin@demo.com",
+  "aName": "College",
+  "street": "Av. Carlos Lazo #100",
+  "intNumber": "",
+  "PC": "12345",
+  "Country": "Mexico",
+  "State": "CDMX",
+  "City": "Santa Fe"
+},{
+  "_id": {
+    "$oid": "5ecef7704427eb40688c5fae"
+  },
+  "uID": {
+    "$oid": "5ecdd3d172cc9161f118f919"
+  },
+  "uEmail": "a01021960@itesm.mx",
+  "aName": "Home",
+  "street": "Avenida de la Esperanza #34",
+  "intNumber": "B-903",
+  "PC": "52177",
+  "Country": "Mexico",
+  "State": "Mexico",
+  "City": "Tecamachalco"
+},{
+  "_id": {
+    "$oid": "5ecefe650c8e957fe979b750"
+  },
+  "uID": {
+    "$oid": "5ecefddc0c8e957fe979b74e"
+  },
+  "uEmail": "danielroa98@outlook.com",
+  "aName": "Home",
+  "street": "Lago de Texcoco #420",
+  "intNumber": "#3",
+  "PC": "52177",
+  "Country": "Mexico",
+  "State": "Mexico",
+  "City": "Naucalpan"
+}]
