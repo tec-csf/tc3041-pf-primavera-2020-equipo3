@@ -1,15 +1,31 @@
 const path = require("path");
 const express = require("express");
 const bodyParser = require("body-parser");
+const redis = require('./redis');
 const passwordHash = require('password-hash');
 
 const app = new express();
-const { config, engine } = require("express-edge");
+const {
+    config,
+    engine
+} = require("express-edge");
 
 const MongoClient = require("mongodb").MongoClient;
 const mongo = require("mongodb");
 const url = "mongodb+srv://equipo3:admin@cluster-1xa1r.gcp.mongodb.net/test?retryWrites=true&w=majority";
 var str = "";
+
+const validateSession = async (uID) => {
+    const key = await redis.get(uID)
+    const active = key ? true : false
+    console.log('SESSION EXISTS: ', active)
+    if (active) {
+        redis.set(userLogin.toString(), key, 300)
+    }
+    return {
+        active
+    }
+}
 
 var userLogin = [];
 var productID = [];
@@ -20,22 +36,24 @@ app.set("views", `../frontend`);
 
 //Body parser
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 
 app.use(express.static(path.join(__dirname, "public")));
 
 //  Login
 app.get('/', async (req, res) => {
     console.log(userLogin);
-  res.render('login');
+    res.render('login');
 });
 
 app.get('/login', async (req, res) => {
     res.render('login');
 });
 
-app.post('/loginValidate', async(req, res) => {
-    
+app.post('/loginValidate', async (req, res) => {
+
     userLogin = [];
 
     console.log(req.body.email);
@@ -53,8 +71,10 @@ app.post('/loginValidate', async(req, res) => {
         var dB = db.db("tienda");
         var collection = dB.collection("users");
 
-        collection.findOne({"Email":email}, function(err, doc){
-            if(err) throw err;
+        collection.findOne({
+            "Email": email
+        }, function (err, doc) {
+            if (err) throw err;
 
             console.log(password);
 
@@ -62,25 +82,26 @@ app.post('/loginValidate', async(req, res) => {
 
             console.log(passVer);
 
-            if(doc && doc._id){
+            if (doc && doc._id) {
                 if (passVer == true) {
                     //console.log(doc);
                     //var string = encodeURIComponent(doc);
                     //console.log(userSession);
                     console.log("Correct login")
+                    redis.set(email, String(doc._id), 300)
                     res.redirect("/home");
-                }else{
+                } else {
                     res.send("Invalid login, check your credentials");
                 }
-            }else{
+            } else {
                 res.send("Invalid login, check your credentials");
             }
         });
-    }); 
+    });
 });
 
 //In case there's a login error
-app.get('/loginerror', (req, res)=>{
+app.get('/loginerror', (req, res) => {
     res.render('loginerror')
 })
 
@@ -100,13 +121,13 @@ app.post('/newUser/save', (req, res) => {
 
     console.log(user);
 
-    mongo.connect(url, function(err, db){
+    mongo.connect(url, function (err, db) {
         if (err) throw err;
         var dB = db.db("tienda");
         dB.collection("users").insertOne(user, function (err, result) {
-          if (err) throw err;
-          console.log("User created");
-          db.close();
+            if (err) throw err;
+            console.log("User created");
+            db.close();
         });
     });
     res.redirect('/');
@@ -115,14 +136,18 @@ app.post('/newUser/save', (req, res) => {
 
 //  Home Screen
 app.get('/home', async (req, res) => {
-
+    var session = await validateSession(userLogin.toString());
+    if (!session.active) {
+        userLogin = [];
+        return res.redirect('login');
+    }
 
     console.log("Home");
 
     var userVer = userLogin.toString();
 
-    mongo.connect(url, async(err, db) =>{
-        
+    mongo.connect(url, async (err, db) => {
+
         console.log(userVer);
 
         if (err) throw err;
@@ -130,8 +155,12 @@ app.get('/home', async (req, res) => {
         var dB = db.db("tienda");
         var collectionUsers = dB.collection("users");
 
-        var products = await dB.collection('products').find({}).sort({_id:1}).toArray();
-        var user = await collectionUsers.findOne({"Email": userVer});
+        var products = await dB.collection('products').find({}).sort({
+            _id: 1
+        }).toArray();
+        var user = await collectionUsers.findOne({
+            "Email": userVer
+        });
 
         console.log(user);
 
@@ -145,28 +174,33 @@ app.get('/home', async (req, res) => {
 });
 
 //  Screens Settings
-app.get('/mainSettings', async(req,res)=>{
+app.get('/mainSettings', async (req, res) => {
+    var session = await validateSession(userLogin.toString());
+    if (!session.active) {
+        userLogin = [];
+        return res.redirect('login');
+    }
     //res.render('mainSettings');
     var userVer = userLogin.toString();
     console.log(userVer);
 
-    MongoClient.connect(url, function(err, db){
-        if(err) throw err;
+    MongoClient.connect(url, function (err, db) {
+        if (err) throw err;
 
         var dB = db.db("tienda");
         var collection = dB.collection("users");
 
-        var search={
-            Email:userVer
+        var search = {
+            Email: userVer
         };
 
-        collection.find(search).toArray(function(err, userS){
-            if(err) throw err;
+        collection.find(search).toArray(function (err, userS) {
+            if (err) throw err;
 
             var user = userS[0];
 
             console.log(user);
-            res.render('mainSettings',{
+            res.render('mainSettings', {
                 user
             });
         })
@@ -174,7 +208,7 @@ app.get('/mainSettings', async(req,res)=>{
 });
 
 //Solo para añadir productos
-app.get('/products', async(req, res)=>{
+app.get('/products', async (req, res) => {
     res.render('productos');
 });
 
@@ -205,7 +239,13 @@ app.post('/addProducts/save', (req, res) => {
 
 
 // Card settings
-app.get('/cards', async(req, res)=>{
+app.get('/cards', async (req, res) => {
+    var session = await validateSession(userLogin.toString());
+    if (!session.active) {
+        userLogin = [];
+        return res.redirect('login');
+    }
+
     console.log("Cards");
     console.log(userLogin);
 
@@ -215,14 +255,16 @@ app.get('/cards', async(req, res)=>{
         uEmail: userVer
     };
 
-    MongoClient.connect(url, async(err, db) => {
-        if(err) throw err;
-        
+    MongoClient.connect(url, async (err, db) => {
+        if (err) throw err;
+
         console.log(search);
-        
+
         var dB = db.db("tienda");
 
-        var cards = await dB.collection("bank accounts").find(search).sort({_id:1}).toArray();
+        var cards = await dB.collection("bank accounts").find(search).sort({
+            _id: 1
+        }).toArray();
 
         console.log(cards);
 
@@ -232,7 +274,12 @@ app.get('/cards', async(req, res)=>{
     })
 });
 
-app.get('/addCard', async(req, res)=>{
+app.get('/addCard', async (req, res) => {
+    var session = await validateSession(userLogin.toString());
+    if (!session.active) {
+        userLogin = [];
+        return res.redirect('login');
+    }
     var userVer = userLogin.toString();
     console.log(userVer);
 
@@ -241,20 +288,20 @@ app.get('/addCard', async(req, res)=>{
     })
 });
 
-app.post('/addCards/save', (req, res) =>{
-    
+app.post('/addCards/save', (req, res) => {
+
     var userVer = userLogin.toString();
 
     var search = {
         Email: userVer
     }
 
-    MongoClient.connect(url, function(err, db){
-        if(err) throw err;
+    MongoClient.connect(url, function (err, db) {
+        if (err) throw err;
 
         var dB = db.db("tienda");
 
-        dB.collection("users").find(search).toArray(function(err,user){
+        dB.collection("users").find(search).toArray(function (err, user) {
             if (err) throw err;
             var user = user[0];
 
@@ -266,8 +313,8 @@ app.post('/addCards/save', (req, res) =>{
                 expDate: req.body.expDate,
             };
 
-            dB.collection("bank accounts").insertOne(tarjeta, function(err, result){
-                if(err) throw err;
+            dB.collection("bank accounts").insertOne(tarjeta, function (err, result) {
+                if (err) throw err;
 
                 console.log("Card added");
             })
@@ -277,19 +324,23 @@ app.post('/addCards/save', (req, res) =>{
     })
 })
 
-app.get('/deleteCard', async(req, res)=>{
-    
+app.get('/deleteCard', async (req, res) => {
+    var session = await validateSession(userLogin.toString());
+    if (!session.active) {
+        userLogin = [];
+        return res.redirect('login');
+    }
     var userVer = userLogin.toString();
 
     var search = {
         uEmail: userVer
     }
 
-    MongoClient.connect(url, async function(err, db){
-        if(err) throw err;
+    MongoClient.connect(url, async function (err, db) {
+        if (err) throw err;
 
         var dB = db.db("tienda");
-        
+
         dB.collection("bank accounts").find(search).toArray(function (err, card) {
             if (err) throw err;
 
@@ -302,43 +353,43 @@ app.get('/deleteCard', async(req, res)=>{
     })
 });
 
-app.post('/deleteCard/confirm', (req, res)=>{
+app.post('/deleteCard/confirm', (req, res) => {
 
     var userVer = userLogin.toString();
-    
+
     var search = {
         Email: userVer
     };
 
-    MongoClient.connect(url, function(err, db){
+    MongoClient.connect(url, function (err, db) {
         if (err) throw err;
         var dB = db.db("tienda");
-        
-        dB.collection("users").find(search).toArray(function(err, user){
+
+        dB.collection("users").find(search).toArray(function (err, user) {
             if (err) throw err;
-            
+
             var userS = user[0];
-            
+
             console.log(userS._id);
-            
+
             var delCard = {
                 uID: userS._id,
                 uEmail: userVer,
                 cNumber: req.body.cNumber,
-                bank:   req.body.bank,
+                bank: req.body.bank,
                 expDate: req.body.expDate
             };
 
             console.log(delCard);
 
-            dB.collection("bank accounts").remove(delCard, function(err, result){
+            dB.collection("bank accounts").remove(delCard, function (err, result) {
                 if (err) throw err;
 
                 console.log("\nCard deleted");
             })
 
         });
-        
+
     });
 
     res.redirect('/mainSettings');
@@ -346,7 +397,12 @@ app.post('/deleteCard/confirm', (req, res)=>{
 //End cards
 
 //Addresses
-app.get('/address', async(req, res)=>{
+app.get('/address', async (req, res) => {
+    var session = await validateSession(userLogin.toString());
+    if (!session.active) {
+        userLogin = [];
+        return res.redirect('login');
+    }
     console.log("\nAddresses");
     console.log(userLogin);
 
@@ -356,46 +412,54 @@ app.get('/address', async(req, res)=>{
         uEmail: userVer
     };
 
-    MongoClient.connect(url, async(err, db)=>{
-        if(err) throw err;
+    MongoClient.connect(url, async (err, db) => {
+        if (err) throw err;
         console.log(search);
 
         var dB = db.db("tienda");
-        
-        var addresses = await dB.collection("addresses").find(search).sort({_id:1}).toArray();
 
-        res.render('address',{
+        var addresses = await dB.collection("addresses").find(search).sort({
+            _id: 1
+        }).toArray();
+
+        res.render('address', {
             addresses: addresses
         })
     })
 })
 
-app.get('/newAddress', async(req, res)=>{
+app.get('/newAddress', async (req, res) => {
+    var session = await validateSession(userLogin.toString());
+    if (!session.active) {
+        userLogin = [];
+        return res.redirect('login');
+    }
+
     var userVer = userLogin.toString();
-    
-    res.render('newAddress',{
+
+    res.render('newAddress', {
         userVer
     })
 });
 
-app.post('/newAddress/save', async(req, res)=>{
+app.post('/newAddress/save', async (req, res) => {
     var userVer = userLogin.toString()
 
-    var search={
-        Email:userVer
+    var search = {
+        Email: userVer
     };
 
-    MongoClient.connect(url, function(err, db){
+    MongoClient.connect(url, function (err, db) {
         if (err) throw err;
 
         var dB = db.db("tienda");
 
-        dB.collection("users").find(search).toArray(function(err, user){
-            if(err) throw err;
+        dB.collection("users").find(search).toArray(function (err, user) {
+            if (err) throw err;
 
             var user = user[0];
 
-            var dir ={
+            var dir = {
                 uID: user._id,
                 uEmail: userVer,
                 aName: req.body.name,
@@ -409,7 +473,7 @@ app.post('/newAddress/save', async(req, res)=>{
 
             console.log(dir);
 
-            dB.collection("addresses").insertOne(dir, function(err, result){
+            dB.collection("addresses").insertOne(dir, function (err, result) {
                 if (err) throw err;
                 console.log("Address added")
             })
@@ -418,18 +482,25 @@ app.post('/newAddress/save', async(req, res)=>{
     })
 })
 
-app.get('/deleteAddress', async(req, res)=>{
+app.get('/deleteAddress', async (req, res) => {
+
+    var session = await validateSession(userLogin.toString());
+    if (!session.active) {
+        userLogin = [];
+        return res.redirect('login');
+    }
+
     var userVer = userLogin.toString();
 
     var search = {
         uEmail: userVer
     };
 
-    MongoClient.connect(url, async function(err, db){
+    MongoClient.connect(url, async function (err, db) {
         if (err) throw err;
         var dB = db.db("tienda")
 
-        dB.collection("addresses").find(search).toArray(function(err, dir){
+        dB.collection("addresses").find(search).toArray(function (err, dir) {
             if (err) throw err;
 
             var address = dir[0];
@@ -441,7 +512,8 @@ app.get('/deleteAddress', async(req, res)=>{
     })
 });
 
-app.post('/deleteAddress/save', (req, res)=>{
+app.post('/deleteAddress/save', (req, res) => {
+
     var userVer = userLogin.toString();
 
     console.log(userVer)
@@ -467,11 +539,11 @@ app.post('/deleteAddress/save', (req, res)=>{
         City: req.body.city
     }
 
-    MongoClient.connect(url, async function(err, db){
+    MongoClient.connect(url, async function (err, db) {
         if (err) throw err;
         var dB = db.db("tienda");
 
-        dB.collection("users").find(searchUser).toArray(function(err, user){
+        dB.collection("users").find(searchUser).toArray(function (err, user) {
             if (err) throw err;
 
             var usr = user[0];
@@ -490,7 +562,7 @@ app.post('/deleteAddress/save', (req, res)=>{
                 City: req.body.city
             }
 
-            dB.collection("addresses").remove(dir, function(err, result){
+            dB.collection("addresses").remove(dir, function (err, result) {
                 if (err) throw err;
 
                 console.log("Address deleted");
@@ -503,19 +575,30 @@ app.post('/deleteAddress/save', (req, res)=>{
 //Fin settings
 
 //wishlist
-app.get('/wishlist', async(req, res) => {
+app.get('/wishlist', async (req, res) => {
+
+    var session = await validateSession(userLogin.toString());
+    if (!session.active) {
+        userLogin = [];
+        return res.redirect('login');
+    }
+
     var userVer = userLogin.toString();
 
     var searchE = {
         uEmail: userVer
     };
-    MongoClient.connect(url, async(err, db)=>{
+    MongoClient.connect(url, async (err, db) => {
         if (err) throw err;
 
         var dB = db.db("tienda");
-    
-        var wish = await dB.collection("wishlist").find(searchE).sort({_id:-1}).toArray();
-        var user = await dB.collection("users").findOne({"Email": userVer});
+
+        var wish = await dB.collection("wishlist").find(searchE).sort({
+            _id: -1
+        }).toArray();
+        var user = await dB.collection("users").findOne({
+            "Email": userVer
+        });
         res.render('wishlist', {
             user,
             wish: wish
@@ -525,6 +608,13 @@ app.get('/wishlist', async(req, res) => {
 
 
 app.get('/addWishlist/:Name', (req, res) => {
+
+    var session = await validateSession(userLogin.toString());
+    if (!session.active) {
+        userLogin = [];
+        return res.redirect('login');
+    }
+
     const prodName = req.params.Name;
     const userVer = userLogin.toString();
     MongoClient.connect(url, async function (err, db) {
@@ -548,7 +638,7 @@ app.get('/addWishlist/:Name', (req, res) => {
     })
 });
 
-app.post("/addWishlist/save", async(req, res) => {
+app.post("/addWishlist/save", async (req, res) => {
     var itemID = req.body.itemID;
     var prodName = req.body.itemName;
 
@@ -558,7 +648,7 @@ app.post("/addWishlist/save", async(req, res) => {
 
     //console.log(prodQty);
 
-    MongoClient.connect(url, function(err, db){
+    MongoClient.connect(url, function (err, db) {
         if (err) throw err;
 
         var dB = db.db("tienda");
@@ -568,18 +658,18 @@ app.post("/addWishlist/save", async(req, res) => {
         var searchU = {
             Email: userVer
         };
-        
+
         var searchP = {
             Name: prodName
         }
 
-        collectionU.find(searchU).toArray(function(err, userS){
-            
+        collectionU.find(searchU).toArray(function (err, userS) {
+
             if (err) throw err;
             var user = userS[0];
 
             console.log(user);
-            collectionP.find(searchP).toArray(function(err, prodS){
+            collectionP.find(searchP).toArray(function (err, prodS) {
                 if (err) throw err;
 
                 var prod = prodS[0];
@@ -590,13 +680,13 @@ app.post("/addWishlist/save", async(req, res) => {
                     uEmail: userVer,
                     pImage: prod.Image,
                     pName: prod.Name,
-                    description:prod.Description,
+                    description: prod.Description,
                     price: prod.Price
                 };
 
                 console.log(wishadded);
 
-                dB.collection("wishlist").insertOne(wishadded, function(err, res){
+                dB.collection("wishlist").insertOne(wishadded, function (err, res) {
                     if (err) throw err;
 
                     console.log("Added");
@@ -605,26 +695,34 @@ app.post("/addWishlist/save", async(req, res) => {
             })
         });
 
-        
+
     })
 });
 
 //Cart
-app.get('/cart', async(req, res)=>{
-    
+app.get('/cart', async (req, res) => {
+    var session = await validateSession(userLogin.toString());
+    if (!session.active) {
+        userLogin = [];
+        return res.redirect('login');
+    }
     var userVer = userLogin.toString();
 
     var searchU = {
         uEmail: userVer
     };
 
-    MongoClient.connect(url, async(err, db)=>{
+    MongoClient.connect(url, async (err, db) => {
         if (err) throw err;
 
         var dB = db.db("tienda");
-        
-        var cartI = await dB.collection("cart").find(searchU).sort({_id:-1}).toArray();
-        var user = await dB.collection("users").findOne({"Email": userVer});
+
+        var cartI = await dB.collection("cart").find(searchU).sort({
+            _id: -1
+        }).toArray();
+        var user = await dB.collection("users").findOne({
+            "Email": userVer
+        });
 
         res.render('cart', {
             user,
@@ -633,12 +731,19 @@ app.get('/cart', async(req, res)=>{
     })
 });
 
-app.get('/addToCart/:Name', (req, res)=>{
+app.get('/addToCart/:Name', (req, res) => {
+
+    var session = await validateSession(userLogin.toString());
+    if (!session.active) {
+        userLogin = [];
+        return res.redirect('login');
+    }
+
     const prodName = req.params.Name;
 
     const userVer = userLogin.toString();
 
-    MongoClient.connect(url, async function(err, db){
+    MongoClient.connect(url, async function (err, db) {
         if (err) throw err;
 
         var dB = db.db("tienda");
@@ -650,7 +755,7 @@ app.get('/addToCart/:Name', (req, res)=>{
             Email: userVer
         } */
 
-        dB.collection("products").find(searchP).toArray(function(err, prodS){
+        dB.collection("products").find(searchP).toArray(function (err, prodS) {
             if (err) throw err;
 
             var item = prodS[0];
@@ -663,8 +768,8 @@ app.get('/addToCart/:Name', (req, res)=>{
     })
 });
 
-app.post('/addItem/confirm', async(req, res)=>{
-    
+app.post('/addItem/confirm', async (req, res) => {
+
     var itemID = req.body.itemID;
     var prodName = req.body.itemName;
 
@@ -674,7 +779,7 @@ app.post('/addItem/confirm', async(req, res)=>{
 
     console.log(prodQty);
 
-    MongoClient.connect(url, function(err, db){
+    MongoClient.connect(url, function (err, db) {
         if (err) throw err;
 
         var dB = db.db("tienda");
@@ -684,18 +789,18 @@ app.post('/addItem/confirm', async(req, res)=>{
         var searchU = {
             Email: userVer
         };
-        
+
         var searchP = {
             Name: prodName
         }
 
-        collectionU.find(searchU).toArray(function(err, userS){
-            
+        collectionU.find(searchU).toArray(function (err, userS) {
+
             if (err) throw err;
             var user = userS[0];
 
             console.log(user);
-            collectionP.find(searchP).toArray(function(err, prodS){
+            collectionP.find(searchP).toArray(function (err, prodS) {
                 if (err) throw err;
 
                 var prod = prodS[0];
@@ -712,7 +817,7 @@ app.post('/addItem/confirm', async(req, res)=>{
 
                 console.log(cartIns);
 
-                dB.collection("cart").insertOne(cartIns, function(err, res){
+                dB.collection("cart").insertOne(cartIns, function (err, res) {
                     if (err) throw err;
 
                     console.log("Cart added");
@@ -721,11 +826,18 @@ app.post('/addItem/confirm', async(req, res)=>{
             })
         });
 
-        
+
     })
 })
 
 app.get('/deleteItem/:pName', (req, res) => {
+
+    var session = await validateSession(userLogin.toString());
+    if (!session.active) {
+        userLogin = [];
+        return res.redirect('login');
+    }
+
     const prodName = req.params.pName;
     const userVer = userLogin.toString();
 
@@ -791,11 +903,17 @@ app.post('/deleteItem/confirm', (req, res) => {
     res.redirect('/cart');
 })
 
-app.get('/buyItem/:pName', (req, res)=>{
+app.get('/buyItem/:pName', (req, res) => {
+    var session = await validateSession(userLogin.toString());
+    if (!session.active) {
+        userLogin = [];
+        return res.redirect('login');
+    }
+
     const prodName = req.params.pName;
     const userVer = userLogin.toString();
 
-    MongoClient.connect(url, async function(err, db){
+    MongoClient.connect(url, async function (err, db) {
         if (err) throw err;
 
         var dB = db.db("tienda");
@@ -811,7 +929,7 @@ app.get('/buyItem/:pName', (req, res)=>{
             uEmail: userVer
         };
 
-        dB.collection("users").find(searchU).toArray(function(err, userS){
+        dB.collection("users").find(searchU).toArray(function (err, userS) {
             if (err) throw err;
             var user = userS[0];
 
@@ -829,10 +947,10 @@ app.get('/buyItem/:pName', (req, res)=>{
                         var car = ca[0];
                         console.log(car);
 
-                        res.render('buyItem',{
+                        res.render('buyItem', {
                             user,
                             addS: addS,
-                            ba:ba,
+                            ba: ba,
                             car
                         })
                     })
@@ -843,7 +961,7 @@ app.get('/buyItem/:pName', (req, res)=>{
 
 })
 
-app.post('/buyItem/confirm', (req, res)=>{
+app.post('/buyItem/confirm', (req, res) => {
     const prodName = req.body.pName;
     const aName = req.body.addName;
     const cNumber = req.body.cNumber;
@@ -854,12 +972,12 @@ app.post('/buyItem/confirm', (req, res)=>{
     console.log(aName);
     console.log(cNumber);
 
-    MongoClient.connect(url, async function(err, db){
+    MongoClient.connect(url, async function (err, db) {
         if (err) throw err;
 
         var dB = db.db("tienda");
 
-        var searchU={
+        var searchU = {
             Email: userVer
         };
 
@@ -882,22 +1000,22 @@ app.post('/buyItem/confirm', (req, res)=>{
         console.log(searchBA);
         console.log(searchC);
 
-        dB.collection("users").find(searchU).toArray(function(err, userS){
+        dB.collection("users").find(searchU).toArray(function (err, userS) {
             var user = userS[0];
 
             console.log(user)
 
-            dB.collection("addresses").find(searchA).toArray(function(err, addS){
+            dB.collection("addresses").find(searchA).toArray(function (err, addS) {
                 var add = addS[0];
 
                 console.log(add);
 
-                dB.collection("bank accounts").find(searchBA).toArray(function(err, ba){
+                dB.collection("bank accounts").find(searchBA).toArray(function (err, ba) {
                     var card = ba[0];
 
                     console.log(card);
 
-                    dB.collection("cart").find(searchC).toArray(function(err, ca){
+                    dB.collection("cart").find(searchC).toArray(function (err, ca) {
                         var car = ca[0];
                         console.log(car);
 
@@ -905,7 +1023,7 @@ app.post('/buyItem/confirm', (req, res)=>{
 
                         var status = "4-6 weeks thanks to the outbreak";
 
-                        var pedido ={
+                        var pedido = {
                             uID: user._id,
                             aID: add._id,
                             cID: card._id,
@@ -921,15 +1039,15 @@ app.post('/buyItem/confirm', (req, res)=>{
 
 
 
-                        dB.collection("orders").insertOne(pedido, function(err, outcome){
+                        dB.collection("orders").insertOne(pedido, function (err, outcome) {
                             if (err) throw err;
 
                             console.log("Order made correctly")
 
-                            dB.collection("cart").remove(car, function(err, resCart){
+                            dB.collection("cart").remove(car, function (err, resCart) {
                                 console.log("Removed from cart")
                                 res.redirect('/orders')
-                            }) 
+                            })
                         })
                     })
                 })
@@ -939,42 +1057,42 @@ app.post('/buyItem/confirm', (req, res)=>{
 })
 
 //Orders
-app.get('/orders', async(req, res)=>{
+app.get('/orders', async (req, res) => {
+    var session = await validateSession(userLogin.toString());
+    if (!session.active) {
+        userLogin = [];
+        return res.redirect('login');
+    }
     var userVer = userLogin.toString();
 
-    var searchU ={
+    var searchU = {
         uEmail: userVer
     };
 
-    MongoClient.connect(url, async(err, db)=>{
+    MongoClient.connect(url, async (err, db) => {
         if (err) throw err;
 
         var dB = db.db("tienda");
 
-        var orders = await dB.collection("orders").find(searchU).sort({_id:1}).toArray();
-        var user = await dB.collection("users").findOne({"Email":userVer});
+        var orders = await dB.collection("orders").find(searchU).sort({
+            _id: 1
+        }).toArray();
+        var user = await dB.collection("users").findOne({
+            "Email": userVer
+        });
 
         console.log(orders)
 
-        res.render('orders',{
+        res.render('orders', {
             user,
             orders: orders
         })
 
     })
 });
-//Top Porducts
-/*app.get('/pedido', async (req, res) => {
-    var numDat = 5;
-    MongoClient.connect(url, async(err, db)=>{
-        if (err) throw err;
 
-        var dB = db.db("tienda");
-
-    })
-})*/
 //User logut
-app.get('/logout',async(req, res)=>{
+app.get('/logout', async (req, res) => {
     userLogin = [];
     console.log(userLogin)
     res.redirect('login');
