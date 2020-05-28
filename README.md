@@ -54,7 +54,9 @@ Como parte de la entrega final del proyecto, se debe incluir la siguiente inform
 
 ## 2. Descripción del proyecto
 
-Como proyecto final, decidimos hacer una tienda en línea donde un usuario pueda realizar compras con los productos disponibles. Dentro de la aplicación web, contamos con las siguientes características:
+Como proyecto final, decidimos hacer una tienda en línea donde un usuario pueda realizar compras con los productos disponibles. 
+Los usuarios podrán explorar los top 10 artículos mas vendidos, agregarlos al carrito, duplicarlos y añadirlos a su wishlist conforme vayan explorando esta misma. Asi mismo, podrán añadir diversas formas de pago y podrán editar sus datos personales, en caso que se realice un cambio en alguno de estos (e.g. cambio de dirección).
+Dentro de la aplicación web, contamos con las siguientes características:
 
 * Agregar un producto a un carrito
 * Realizar la compra de un producto
@@ -84,10 +86,12 @@ A continuación aparecen descritos los diferentes elementos que forman parte de 
 ### 3.1 Modelos de *bases de datos* utilizados
 
 *[Incluya aquí una explicación del análisis realizado y la justificación de los modelos de *bases de datos* seleccionados. Incluya todo lo que considere necesario para que una persona sin conocimientos técnicos pueda entender de que trata su solución.]*
+MongoDb
+Redus
 
 ### 3.2 Arquitectura de la solución
 
-*[Incluya aquí un diagrama donde se aprecie la arquitectura de la solución propuesta, así como la interacción entre los diferentes componentes de la misma.]*
+![alt text](https://app.lucidchart.com/documents/edit/1ce79f92-d5bf-4ac3-9b39-572fe39b308f/0_0?beaconFlowId=AB30EFB170A7E27D#?folder_id=home&browser=icon)
 
 ### 3.3 Frontend
 
