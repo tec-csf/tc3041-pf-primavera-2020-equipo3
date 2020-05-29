@@ -87,7 +87,17 @@ A continuación aparecen descritos los diferentes elementos que forman parte de 
 
 *[Incluya aquí una explicación del análisis realizado y la justificación de los modelos de *bases de datos* seleccionados. Incluya todo lo que considere necesario para que una persona sin conocimientos técnicos pueda entender de que trata su solución.]*
 
-MongoDb: lo utilizamos por que es muy facil de usar y eficiente para la forma en la que queremos guardar los datos.
+Para el desarrollo de este proyecto, se están utilizando dos bases de datos distintas, MongoDB y Redis.
+
+#### 3.1.1 MongoDB
+
+  Se decidió implementar una base de datos en MongoDB debido a la sencillez que tiene a la hora de manejar los datos insertados por los usuarios.
+  Esto consiste en las operaciones que están siendo explicadas en la sección *3.4.1.1 MongoDB*.
+  
+  En pocas palabras, la implementación de MongoDB nos permite tener un modelo accesible desde una computadora que cuente con un sistema operativo Windows 10/Linux/MacOS, en el cual el usuario puede descargar un software proprietario de MongoDB llamado [Compass](https://www.mongodb.com/products/compass), en este software, se pueden ver los valores que insertó en la colección correspondiente.
+
+  Una colección de MongoDB puede ser visto como una tabla en MySQL, aquí se están alojando los valores de cada campo que se insertó y, lo mas importante, el ObjectID (el id que genera MongoDB de manera automática).
+
 Redis: sirve para mantener las sesiones activas y actualizadas.
 
 ### 3.2 Arquitectura de la solución
@@ -146,7 +156,7 @@ La solución del backend fue llevada a cabo utilizando JavaScript, esta compuest
 Aquí se pueden presenciar las operaciones de tipo _RESTful_, es decir, **POST** y **GET**. 
 Para cargar la página web (render) en la que el usuario se encuentra, se esta utilizando **app.get()**, esto manda a llamar la página a la cual el usuario está accediendo.
 
-##### MongoDB
+##### 3.4.1.1 MongoDB
 
 La librería de MongoDB se está encargando de realizar una conexión a la base de datos que se creó para el uso de este proyecto.
 Para elló, sea realizó una conexión al principio del documento, esto puede ser visto a continuación:
@@ -171,7 +181,7 @@ En el caso que el usuario haya insertado un correo que **no** se encuentra regis
 
 A lo largo del proyecto se están utilizando operaciones como la que se mencionó anteriormente, hay campos en los que si se tuvieron que utilizar mas operaciones del tipo _find_ para que se buscara el valor que haya insertado el usuario.
 
-##### Redis
+##### 3.4.1.2 Redis
 
 #### 3.4.1 Lenguaje de programación
 
