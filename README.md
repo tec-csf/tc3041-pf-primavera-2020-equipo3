@@ -141,25 +141,10 @@ La documentación oficial de Bootstrap se puede encontrar [aquí](https://getboo
 
 ### 3.4 Backend
 
-*[Incluya aquí una explicación de la solución utilizada para el backend del proyecto. No olvide incluir las ligas o referencias donde se puede encontrar información de los lenguajes de programación, frameworks y librerías utilizadas.]*
+La solución del backend fue llevada a cabo utilizando JavaScript, esta compuesta por librerías de Node JS utilizando el comando `npm install <nombre de la librería>`. 
 
-La solución en el backend se programó en JavaScript, esta compuesta por las siguientes librerías de Node JS:
-
-* body-parser
-* edge.js
-* express
-* express-edge
-* express-validator
-* mongodb
-* nodemon
-* password-hash
-* redis
-
-Las librerías de body-parser, edge.js y express están siendo implementadas para el uso y manejo de los documentos que componen el *frontend* de esta aplicación web, de estas liberías, la que tiene una funcionalidad diferente son body-parser, mongodb, nodemon y redis.
-La librería de body-parser nos está permitiendo leer los valores a los cuales se están haciendo solicitudes de *POST*, de tal manera, permitiendo que el backend lo pueda manejar.
-Nodemon es una librería que se encarga del reinicio y del manejo de la aplicación web, esto nos permite poder mantener la aplicación web corriendo y, si se hicieron cambios en el index.js, pueda reiniciar la aplicación con los cambios recientes. *Password-hash* se encarga de realizar una operación hash en la contraseña recién creada por un usuario, eso permite que, tanto los administradores como los usuarios, no puedan ver las contraseñas sin el hash.
-
-Por último, las últimas librerías, *mongodb* y *redis*, se encargan de realizar conexiones a las bases de datos que se les espefiquen, a continuación, se puede ver mas información de estas librerías y su implementación correspondiente.
+Aquí se pueden presenciar las operaciones de tipo _RESTful_, es decir, **POST** y **GET**. 
+Para cargar la página web (render) en la que el usuario se encuentra, se esta utilizando **app.get()**, esto manda a llamar la página a la cual el usuario está accediendo.
 
 ##### MongoDB
 
@@ -190,10 +175,32 @@ A lo largo del proyecto se están utilizando operaciones como la que se mencion�
 
 #### 3.4.1 Lenguaje de programación
 
-El desarrollo de la aplicación fue en 
+El desarrollo fue llevado a cabo utilizando JavaScript, esto nos permite desplegar la aplicación y manejar valores que se tienen que desplegar en el frontend.
+
+Como se mencionó anteriormente, aquí también se encuentran el manejo de las transacciones de tipo _RESTful_, es decir, las operaciones **POST** y **GET**.
+
+Este script se encarga de cargar las páginas usando una operación get y mandando a llamar la el script de express que se encarga de llevar a cabo la operación para desplegarla.
 
 #### 3.4.2 Framework
 #### 3.4.3 Librerías de funciones o dependencias
+
+El script esta compuesto por las siguientes librerías de Node JS:
+
+* body-parser
+* edge.js
+* express
+* express-edge
+* express-validator
+* mongodb
+* nodemon
+* password-hash
+* redis
+
+Las librerías de body-parser, edge.js y express están siendo implementadas para el uso y manejo de los documentos que componen el *frontend* de esta aplicación web, de estas liberías, la que tiene una funcionalidad diferente son body-parser, mongodb, nodemon y redis.
+La librería de body-parser nos está permitiendo leer los valores a los cuales se están haciendo solicitudes de *POST*, de tal manera, permitiendo que el backend lo pueda manejar.
+Nodemon es una librería que se encarga del reinicio y del manejo de la aplicación web, esto nos permite poder mantener la aplicación web corriendo y, si se hicieron cambios en el index.js, pueda reiniciar la aplicación con los cambios recientes. *Password-hash* se encarga de realizar una operación hash en la contraseña recién creada por un usuario, eso permite que, tanto los administradores como los usuarios, no puedan ver las contraseñas sin el hash.
+
+Por último, las últimas librerías, *mongodb* y *redis*, se encargan de realizar conexiones a las bases de datos que se les espefiquen, a continuación, se puede ver mas información de estas librerías y su implementación correspondiente.
 
 ### 3.5 API
 
