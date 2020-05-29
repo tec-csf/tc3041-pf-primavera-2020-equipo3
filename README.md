@@ -92,7 +92,7 @@ Para el desarrollo de este proyecto, se están utilizando dos bases de datos dis
 #### 3.1.1 MongoDB
 
   Se decidió implementar una base de datos en MongoDB debido a la sencillez que tiene a la hora de manejar los datos insertados por los usuarios.
-  Esto consiste en las operaciones que están siendo explicadas en la sección *3.4.1.1 MongoDB*.
+  Esto consiste en las operaciones que están siendo explicadas en la sección *3.4.0.1 MongoDB*.
   
   En pocas palabras, la implementación de MongoDB nos permite tener un modelo accesible desde una computadora que cuente con un sistema operativo Windows 10/Linux/MacOS, en el cual el usuario puede descargar un software proprietario de MongoDB llamado [Compass](https://www.mongodb.com/products/compass), en este software, se pueden ver los valores que insertó en la colección correspondiente.
 
@@ -156,7 +156,7 @@ La solución del backend fue llevada a cabo utilizando JavaScript, esta compuest
 Aquí se pueden presenciar las operaciones de tipo _RESTful_, es decir, **POST** y **GET**. 
 Para cargar la página web (render) en la que el usuario se encuentra, se esta utilizando **app.get()**, esto manda a llamar la página a la cual el usuario está accediendo.
 
-##### 3.4.1.1 MongoDB
+##### 3.4.0.1 MongoDB
 
 La librería de MongoDB se está encargando de realizar una conexión a la base de datos que se creó para el uso de este proyecto.
 Para elló, sea realizó una conexión al principio del documento, esto puede ser visto a continuación:
@@ -181,7 +181,7 @@ En el caso que el usuario haya insertado un correo que **no** se encuentra regis
 
 A lo largo del proyecto se están utilizando operaciones como la que se mencionó anteriormente, hay campos en los que si se tuvieron que utilizar mas operaciones del tipo _find_ para que se buscara el valor que haya insertado el usuario.
 
-##### 3.4.1.2 Redis
+##### 3.4.0.2 Redis
 
 #### 3.4.1 Lenguaje de programación
 
