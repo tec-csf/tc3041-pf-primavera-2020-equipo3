@@ -155,8 +155,43 @@ La solución en el backend se programó en JavaScript, esta compuesta por las si
 * password-hash
 * redis
 
+Las librerías de body-parser, edge.js y express están siendo implementadas para el uso y manejo de los documentos que componen el *frontend* de esta aplicación web, de estas liberías, la que tiene una funcionalidad diferente son body-parser, mongodb, nodemon y redis.
+La librería de body-parser nos está permitiendo leer los valores a los cuales se están haciendo solicitudes de *POST*, de tal manera, permitiendo que el backend lo pueda manejar.
+Nodemon es una librería que se encarga del reinicio y del manejo de la aplicación web, esto nos permite poder mantener la aplicación web corriendo y, si se hicieron cambios en el index.js, pueda reiniciar la aplicación con los cambios recientes. *Password-hash* se encarga de realizar una operación hash en la contraseña recién creada por un usuario, eso permite que, tanto los administradores como los usuarios, no puedan ver las contraseñas sin el hash.
+
+Por último, las últimas librerías, *mongodb* y *redis*, se encargan de realizar conexiones a las bases de datos que se les espefiquen, a continuación, se puede ver mas información de estas librerías y su implementación correspondiente.
+
+##### MongoDB
+
+La librería de MongoDB se está encargando de realizar una conexión a la base de datos que se creó para el uso de este proyecto.
+Para elló, sea realizó una conexión al principio del documento, esto puede ser visto a continuación:
+
+```
+const MongoClient = require("mongodb").MongoClient;
+
+const mongo = require("mongodb");
+
+const url = "mongodb+srv://equipo3:******@cluster-1xa1r.gcp.mongodb.net/test?retryWrites=true&w=majority";
+```
+
+- Nota, la cadena de asteriscos que se encuentra después del nombre, representa la contraseña.
+
+En las primeras lineas se está mandando a llamar la librería de *mongodb* para que el **index.js** pueda tener acceso a las funciones que vienen incluidas en esta misma.
+
+Lo importante de la librería, es el acceso que nos da a las operaciones que se encuentran en el aggregation framework ofrecido por MongoDB.
+
+Como ejemplo, se puede ver en la creación de un usuario nuevo, para poder realizar esta operación, se esta realizando una operación que se llama _findOne_. 
+Esta operación se esta encargando de buscar el correo que el usuario está intentando registrar, en el caso que el correo ya se encuentre en la base de datos, va a cargar una página en blanco para que el usuario inserte un correo que no se encuentre registrado.
+En el caso que el usuario haya insertado un correo que **no** se encuentra registrado, va a redireccionar al usuario a la página de login, para que pueda ingresar su correo y contraseña.
+
+A lo largo del proyecto se están utilizando operaciones como la que se mencionó anteriormente, hay campos en los que si se tuvieron que utilizar mas operaciones del tipo _find_ para que se buscara el valor que haya insertado el usuario.
+
+##### Redis
 
 #### 3.4.1 Lenguaje de programación
+
+El desarrollo de la aplicación fue en 
+
 #### 3.4.2 Framework
 #### 3.4.3 Librerías de funciones o dependencias
 
