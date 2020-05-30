@@ -163,7 +163,30 @@ app.get('/home', async (req, res) => {
     console.log("Home");
 
     var userVer = userLogin.toString();
-
+    /*const pipeline =[{
+        $group: {
+            _id: "$pName",
+            count: {
+                "$sum": 1
+                    }
+                }
+            }, {
+                $sort: {
+                    count: -1
+            }
+    }]*/
+    /*var test = require('monk')('localhost:4000/home'),
+    sample = db.get('tienda');
+    sample.col.group(
+        ["pName"],
+        {},
+        {"count":0},
+        "function (obj,prev) { prev.count++; }",
+            function(err,docs) {
+            if (err) console.log(err);
+            console.log( docs );
+    }
+    );*/
     mongo.connect(url, async (err, db) => {
 
         console.log(userVer);
@@ -171,11 +194,26 @@ app.get('/home', async (req, res) => {
         if (err) throw err;
 
         var dB = db.db("tienda");
+
         var collectionUsers = dB.collection("users");
 
         var products = await dB.collection('products').find({}).sort({
             _id: 1
         }).toArray();
+
+        var topprod =await dB.collection("orders").find({uEmail : userVer}).sort({_id: -1}).limit(5).toArray();
+        //var array = JSON.parse(topprod.toString())
+        var seenNames = {};
+        topprod = topprod.filter(function(currentObject) {
+            if (currentObject.pName in seenNames) {
+                return false;
+            } else {
+                seenNames[currentObject.pName] = true;
+                return true;
+            }
+        });
+        
+        console.log(topprod)
         var user = await collectionUsers.findOne({
             "Email": userVer
         });
@@ -186,10 +224,38 @@ app.get('/home', async (req, res) => {
 
         res.render('home', {
             user,
-            products: products
+            products: products,
+            topprod:topprod
+           
         })
     })
 });
+//TopProducts
+/*app.get('/home/:Name', async (req, res) => {
+    const topproduct = req.params.Name;
+    MongoClient.connect(url, async function (err, db) {
+        if (err) throw err;
+
+        var dB = db.db("tienda");
+
+        var searchP = {
+            Name: topproduct
+        };
+        //var topprod =await dB.collection("orders").find(searchP).sort({points : -1}).limit(5).toArray();
+        dB.collection("orders").find(searchP).sort({points : -1}).limit(5).toArray(function (err, tprods) {
+            if (err) throw err;
+            //console.log(products[0]);
+            var topprod = tprods[0];
+            console.log(topprod);
+            res.render('home', {
+                topprod
+            })
+        })
+        res.render('home', {
+            topprod:topprod
+        })
+    })
+});*/
 
 //  Screens Settings
 app.get('/mainSettings', async (req, res) => {
@@ -1093,7 +1159,7 @@ app.get('/orders', async (req, res) => {
         var dB = db.db("tienda");
 
         var orders = await dB.collection("orders").find(searchU).sort({
-            _id: 1
+            _id: -1
         }).toArray();
         var user = await dB.collection("users").findOne({
             "Email": userVer

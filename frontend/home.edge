@@ -6,24 +6,22 @@
     <div class = "container">  
         <div class = "row my-3">
             <div class = "col-sm-12 col-lg-4 col-md-4 order-lg-1 order-md-2 borde">
-                <!--h3 class = "text-center">Top Products</h3>
-                <table class="table1">
+            <h3 class = "text-center">{{user.Name}}'s Top Products</h3>
+                <table class="table1 text-center">
                     <thead>
                         <tr>
-                            <th scope="col">Image</th>
+                            <th scope="col"></th>
                         </tr>
                     </thead>
-                    <tbody>
-                        (product in products)
+                    <tbody >
+                        @each( top in topprod)
                         <tr>
-                            <td>
-                                <img src="{product.Image}" width="75" height="75">
-                            </td>
+                            <td>{{top.pName}}</td>
                         </tr>
-                        
+                        @endeach
                     </tbody>
             </table>             
-            </div-->
+            </div>
             <div class = "col-sm-12 col-lg-8 col-md-8 order-md-2 order-lg-2 borde">
                 <h3 class = "text-center">Store</h3>
                 <table class="table">
