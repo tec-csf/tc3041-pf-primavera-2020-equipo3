@@ -71,7 +71,7 @@ app.post('/loginValidate', async (req, res) => {
         var dB = db.db("tienda");
         var collection = dB.collection("users");
 
-        collection.findOne({"Email": email}, function (err, doc) {
+        collection.findOne({ "Email": email }, function (err, doc) {
             if (err) throw err;
 
             console.log(password);
@@ -119,25 +119,27 @@ app.post('/newUser/save', (req, res) => {
 
     console.log(user);
 
-    
+
     var searchMail = {
         Email: req.body.email
     };
+
+    console.log(searchMail);
 
     mongo.connect(url, function (err, db) {
         if (err) throw err;
         var dB = db.db("tienda");
 
-        dB.collection("users").findOne(searchMail, function(err, doc){
+        dB.collection("users").findOne(searchMail, function (err, doc) {
             if (err) throw err;
 
             console.log(doc.Email);
             console.log(searchMail)
 
-            if(doc.Email){
+            if (doc.Email) {
                 console.log("That email is already being used.");
                 res.send("Enter a valid email address");
-            }else{
+            } else {
 
                 console.log("Else")
                 dB.collection("users").insertOne(user, function (err, result) {
@@ -150,7 +152,6 @@ app.post('/newUser/save', (req, res) => {
         });
     });
 });
-//  End register a new user
 
 //  Home Screen
 app.get('/home', async (req, res) => {
@@ -1113,6 +1114,7 @@ app.post('/buyItem/confirm', (req, res) => {
                             cID: card._id,
                             uEmail: userVer,
                             aName: add.aName,
+                            pImage: car.pImage,
                             pName: car.pName,
                             toPay: total,
                             Status: status

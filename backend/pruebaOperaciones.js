@@ -38,32 +38,6 @@ var expDate = "2019-03";
 
 var userVer = email;
 
-/* MongoClient.connect(url, function (err, db) {
-    
-    if (err) throw err;
-
-    var dB = db.db("tienda");
-
-    var search ={
-        Email: email
-    };
-
-    dB.collection("users").find(search).toArray(function(err, user) {
-        if(err) throw err;
-
-        var user = user[0];
-
-        var tarjeta = {
-            uID: user._id,
-            uEmail: email,
-            cNumber: parseFloat(cNumber),
-            bank: bank,
-            expDate: expDate,
-        };
-
-        console.log(tarjeta)
-    })
-}); */
 
 var search = {
     Email: email
@@ -73,64 +47,29 @@ var searchBA = {
     uEmail: email
 }
 
-const prodName = Oreo;
 
 MongoClient.connect(url, async function (err, db) {
-    if (err) throw err;
 
     var dB = db.db("tienda");
 
-    var searchU = {
-        Email: userVer
-    };
-    var searchG = {
-        uEmail: userVer
-    };
+    var collection = dB.collection('users'); // get reference to the collection
+    collection.find(search, {$exists: true}).toArray(function (err, doc) //find if a value exists
+        {
+             console.log(doc.Email);
+             console.log(doc)
 
-    var searchC = {
-        uEmail: userVer,
-        pName: prodName
-    };
+             if (doc.Email) {
+                 console.log("Else")
+                 res.send("Enter a valid email address");
+            } else {
+                console.log("That email is already being used.");
+            }
 
-    dB.collection("users").find(searchU).toArray(function (err, userS) {
-        var user = userS[0];
-
-        console.log(user)
-
-        dB.collection("addresses").find(searchG).toArray(function (err, addS) {
-            var add = addS[0];
-
-            console.log(add);
-
-            dB.collection("bank accounts").find(searchG).toArray(function (err, ba) {
-                var card = ba[0];
-
-                console.log(card);
-
-                dB.collection("cart").find(searchC).toArray(function (err, ca) {
-                    var car = ca[0];
-                    console.log(car);
-
-                    var total = parseFloat(car.quantity) * parseFloat(car.price);
-
-                    var status = "4-6 weeks thanks to the outbreak";
-
-                    var pedido = {
-                        uID: user._id,
-                        aID: add._id,
-                        cID: card._id,
-                        uEmail: userVer,
-                        aName: add.aName,
-                        toPay: total,
-                        Status: status
-                    }
-
-                    console.log(total);
-                    console.log(pedido);
-                })
-            })
-        })
-    })
-})
-
-console.log(prodName);
+        });
+});
+                /*  dB.collection("users").insertOne(user, function (err, result) {
+                     if (err) throw err;
+                     console.log("User created");
+                     db.close();
+                     res.redirect('/');
+                 }); */
