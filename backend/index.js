@@ -1048,6 +1048,7 @@ app.post('/buyItem/confirm', (req, res) => {
                             cID: card._id,
                             uEmail: userVer,
                             aName: add.aName,
+                            pImage: car.pImage,
                             pName: car.pName,
                             toPay: total,
                             Status: status
@@ -1094,7 +1095,7 @@ app.get('/orders', async (req, res) => {
         var dB = db.db("tienda");
 
         var orders = await dB.collection("orders").find(searchU).sort({
-            _id: 1
+            _id: -1
         }).toArray();
         var user = await dB.collection("users").findOne({
             "Email": userVer
