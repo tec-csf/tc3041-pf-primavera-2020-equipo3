@@ -83,6 +83,9 @@ Las librerías de *Redis* y *MongoDB*  se encargan del manejo de su DB correspon
 
 A continuación aparecen descritos los diferentes elementos que forman parte de la solución del proyecto.
 
+Para acceder a la versión final del proyecto, puede ser encontrada aquí:
+http://35.193.212.207:4000
+
 ### 3.1 Modelos de *bases de datos* utilizados
 
 *[Incluya aquí una explicación del análisis realizado y la justificación de los modelos de *bases de datos* seleccionados. Incluya todo lo que considere necesario para que una persona sin conocimientos técnicos pueda entender de que trata su solución.]*
