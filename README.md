@@ -87,6 +87,7 @@ A continuación aparecen descritos los diferentes elementos que forman parte de 
 
 *[Incluya aquí una explicación del análisis realizado y la justificación de los modelos de *bases de datos* seleccionados. Incluya todo lo que considere necesario para que una persona sin conocimientos técnicos pueda entender de que trata su solución.]*
 
+
 Para el desarrollo de este proyecto, se están utilizando dos bases de datos distintas, MongoDB y Redis.
 
 #### 3.1.1 MongoDB
@@ -98,10 +99,14 @@ Para el desarrollo de este proyecto, se están utilizando dos bases de datos dis
 
   Una colección de MongoDB puede ser visto como una tabla en MySQL, aquí se están alojando los valores de cada campo que se insertó y, lo mas importante, el ObjectID (el id que genera MongoDB de manera automática).
 
+![](Arquitectura/pfUML.png)
+
+
+#### 3.1.2 Redis
 Redis: sirve para mantener las sesiones activas y actualizadas.
 
 ### 3.2 Arquitectura de la solución
-![](Arquitectura/pfUML.png)
+
 
 
 ### 3.3 Frontend
@@ -235,49 +240,60 @@ Por último, las últimas librerías, *mongodb* y *redis*, se encargan de realiz
 ## 3.6 Pasos a seguir para utilizar el proyecto
 
 *[Incluya aquí una guía paso a paso para poder utilizar el proyecto, desde la clonación del repositorio hasta el despliegue de la solución en una plataforma en la nube.]*
+
+- NOTA
+  - Es necesario tener instalado Node.js para poder correr esta aplicación, en caso que no cuente con Node JS, lo puede descargar e instalar de [aquí](https://nodejs.org/es/download/).
+
 1. Primero, se necesita clonar el repositorio, con el siguiente comando:
+
    ```
     git clone https://github.com/tec-csf/tc3041-pf-primavera-2020-equipo3.git
     ```
 
-    Una vez que se haya descargado el repositorio, se tendrán las siguientes carpetas:
+    Una vez que se haya descargado el repositorio, se tendrán las siguientes carpetas de manera local:
+
      - Arquitectura	      
      - backend
+     - dbs
      - frontend
-     - DBs
 
-    También el README.md que se encuentra en la carpeta principal.
+    También el [README.md](README.md) que se encuentra en la carpeta raíz.
 
-  2. Es necesario tener instalado Node.js para poder correr esta aplicacion 
 
-    https://nodejs.org/es/download/
-
-  3. Una vez descargado e instalado, entrar desde una terminal a la ubicación de la siguiente carpeta:
+  3. Una vez que tenga el repositorio en su computadora, entre a la carpeta llamada _backend_ con el siguiente comando:
 
   `
-  cd tc3041-t3-primavera-2020-equipo3\backend
+  cd tc3041-pf-primavera-2020-equipo3/backend
   `
 
-- Correr el siguiente comando para asegurarse de tener instaladas todos los paquetes y dependencias de Node necesarias
+ 4. Para instalar las librerías necesarias para que el proyecto corra, es necesario correr el siguiente comando.
+
     `
     npm install
     `
 
- - Finalmente para correr el proyecto usar el siguiente comando en la carpeta del backend:
+ 5. Para poder el correr el proyecto de manera local, es necesario correr el siguiente comando:
+    
     `
     npm start
     `
 
-4. Desde su buscador entrar a la dirección:
+  6. Una vez que este corriendo, se puede conectar mediante su buscador preferido ingresando a la siguiente página <localhost:4000>.
 
-  `
-  localhost:4000
-  `
+  7. Este último comando lo va a llevar a la pagina de inicio donde puede entrar con un usuario existente o crear uno nuevo.
 
-- Este último comando lo va a llevar a la pagina de inicio donde puede entrar con un usuario existente o crear uno nuevo.
+  8. Una vez que haya ingresado con su cuenta recién hecha, podrá realizar las operaciones que se encuentran disponibles en la página web. 
+  Esto incluye:
+
+   - Añadir/borrar una tarjeta de crédito
+   - Añadir/borrar una dirección.
+   - Añadir/borrar productos del carrito.
+   - Añadir productos a un _wishlist_
+   - Ver los pedidos anteriores de un usuario.
+
 
 ## 4. Referencias
 
-https://edge.adonisjs.com/
-https://docs.mongodb.com/
-https://redis.io/documentation
+- https://edge.adonisjs.com/
+- https://docs.mongodb.com/
+- https://redis.io/documentation
