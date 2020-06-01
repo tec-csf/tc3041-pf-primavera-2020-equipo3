@@ -55,7 +55,7 @@ Como parte de la entrega final del proyecto, se debe incluir la siguiente inform
 ## 2. Descripción del proyecto
 
 Como proyecto final, decidimos hacer una tienda en línea donde un usuario pueda realizar compras con los productos disponibles. 
-Los usuarios podrán explorar los top 10 artículos mas vendidos, agregarlos al carrito, duplicarlos y añadirlos a su wishlist conforme vayan explorando esta misma. Asi mismo, podrán añadir diversas formas de pago y podrán editar sus datos personales, en caso que se realice un cambio en alguno de estos (e.g. cambio de dirección).
+Los usuarios podrán explorar los top 5 artículos mas vendidos, agregarlos al carrito, duplicarlos y añadirlos a su wishlist conforme vayan explorando esta misma. Asi mismo, podrán añadir diversas formas de pago y podrán editar sus datos personales, en caso que se realice un cambio en alguno de estos (e.g. cambio de dirección).
 Dentro de la aplicación web, contamos con las siguientes características:
 
 * Agregar un producto a un carrito
