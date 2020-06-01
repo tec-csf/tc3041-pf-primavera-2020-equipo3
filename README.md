@@ -217,7 +217,7 @@ El script esta compuesto por las siguientes librerías de Node JS:
 * password-hash
 * redis
 
-Las librerías de body-parser, edge.js y express están siendo implementadas para el uso y manejo de los documentos que componen el *frontend* de esta aplicación web, de estas liberías, la que tiene una funcionalidad diferente son body-parser, mongodb, nodemon y redis.
+Las librerías de **body-parser**, **edge.js** y **express** están siendo implementadas para el uso y manejo de los documentos que componen el *frontend* de esta aplicación web, de estas liberías, la que tiene una funcionalidad diferente son body-parser, mongodb, nodemon y redis.
 La librería de body-parser nos está permitiendo leer los valores a los cuales se están haciendo solicitudes de *POST*, de tal manera, permitiendo que el backend lo pueda manejar.
 Nodemon es una librería que se encarga del reinicio y del manejo de la aplicación web, esto nos permite poder mantener la aplicación web corriendo y, si se hicieron cambios en el index.js, pueda reiniciar la aplicación con los cambios recientes. *Password-hash* se encarga de realizar una operación hash en la contraseña recién creada por un usuario, eso permite que, tanto los administradores como los usuarios, no puedan ver las contraseñas sin el hash.
 
@@ -227,13 +227,40 @@ Por último, las últimas librerías, *mongodb* y *redis*, se encargan de realiz
 
 *[Incluya aquí una explicación de la solución utilizada para implementar la API del proyecto. No olvide incluir las ligas o referencias donde se puede encontrar información de los lenguajes de programación, frameworks y librerías utilizadas.]*
 
+Para el manejo de las operaciones _RESTful_, se están llevando a cabo mediante la comunicación entre los documentos que componen el frontend y el _index.js_.
+
+Las operaciones y sus descripciones podrán ser vistas en la sección **3.5.4**.
+
 #### 3.5.1 Lenguaje de programación
+
+Como se mencionó en la sección 3.4, se utilizó JavaScript, al igual que sus librerías para poder llevar a cabo las operaciones requeridas.
+
+Gracias a la libería de _body-parser_, se pudo implementar de la manera correcta, esto permite que se lleven a cabo solicitudes del tipo RESTful.
+
 #### 3.5.2 Framework
+
+No se utilizó ningún framework para programar esta sección.
+
 #### 3.5.3 Librerías de funciones o dependencias
+
+La librería que lleva a cabo estas operaciones es *body-parser*, esta se encarga de realizar solicitudes POST y GET.
+Es decir permite que se envién los datos que son requeridos al backend para que sean utilizados para el despliegue de datos al haber establecido una conexión hacia MongoDB.
+
+Para poder llevar a cabo las operaciones, se utilizan *endpoints*, es decir, secciones que se encargan de establecer comunicación entre secciones de la aplicación.
+
+#### 3.5.4 Endpoints
 
 *[Incluya aquí una explicación de cada uno de los endpoints que forman parte de la API. Cada endpoint debe estar correctamente documentado.]*
 
+A continuación se divide la sección en dos sub secciones, una que se enfoca en las operaciones de tipo POST y otra sección que se enfoca en las operaciones de tipo get.
+
+A lo largo de la aplicación, no se implementaron Headers de HTTP.
+
 *[Por cada endpoint debe incluir lo siguiente:]*
+
+##### 3.5.4.1 POST
+
+##### 3.5.4.2 GET
 
 * **Descripción**:
 * **URL**:
@@ -242,6 +269,76 @@ Por último, las últimas librerías, *mongodb* y *redis*, se encargan de realiz
 * **Formato JSON del cuerpo de la solicitud**: 
 * **Formato JSON de la respuesta**:
 * **Códigos de error**:
+
+**app.get('/', ...);** y **app.get('/login'...);**
+
+* Se encargan de desplegar la página del login
+* http://35.193.212.207:4000/
+* GET
+* _Couldn't load website_
+
+**app.get('/newUser', ...)**
+
+* Se encargan de desplegar la página del login
+* http://35.193.212.207:4000/
+* GET
+* _Couldn't load website_
+
+**app.get('/home',...);**
+
+* Se encarga de enviar al usuario a la página de _home_, en esta, se pueden visualizar los productos de la tienda, también ofrece navegación entre las páginas disponibles.
+* http://35.193.212.207:4000/home
+* GET
+* _Coulnd't load site_
+
+**app.get('/mainSettings', ...);**
+
+* Se encarga de enviar al usuario a los ajustes de su cuenta, cuenta con las opciones de ir a las direcciones registradas y a las tarjetas registradas.
+* http://35.193.212.207:4000/mainSettings
+* GET
+* _Coulnd't load site_
+
+**app.get('/products', ...);**
+
+* Esta sección esta bloqueada para el usuario normal, es usado para añadir productos a la tienda.
+* http://35.193.212.207:4000/products
+* GET
+* _Coulnd't load site_
+
+**app.get('/cards', ...);**
+
+* En esta página se pueden ver las tarjetas de crédito registradas por un usuario, de aquí se pueden añadir o eliminar tarjetas, permite regresar a la página principal de ajustes.
+* http://35.193.212.207:4000/cards
+* GET
+* _Coulnd't load site_
+
+**app.get('/addCard', ...)**
+
+* En esta página se pueden añadir tarjetas nuevas a la cuenta de un usuario, en el caso que no se quiera añadir una nueva tarjeta, se puede regresar a la página de ajustes.
+* http://35.193.212.207:4000/addCard
+* GET
+* _Coulnd't load site_
+
+**app.get('/deleteCard', ...)**
+
+* En esta página, un usuario puede borrar una tarjeta de crédito existente o se puede regresar a la página de ajustes.
+* http://35.193.212.207:4000/deleteCard
+* GET
+* _Coulnd't load site_
+
+**app.get('/address', ...)**
+
+* En esta página se pueden ver las direcciones que se encuentran registradas por el usuario, se pueden añadir o eliminar direcciones, permite el regreso del usuario a la pantalla de _mainSettings_.
+* http://35.193.212.207:4000/address
+* GET
+* _Coulnd't load site_
+
+**app.get('/newAddress', ...)**
+
+* Esta página se encarga de añadir direcciones nuevas a la cuenta de un usuario, se puede regresar a la pantalla principal de ajustes en caso que no se requiera añadir una nueva dirección.
+* http://35.193.212.207:4000/newAddress
+* GET
+* _Coulnd't load site_
 
 ## 3.6 Pasos a seguir para utilizar el proyecto
 
