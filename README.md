@@ -88,10 +88,13 @@ http://35.193.212.207:4000
 
 ### 3.1 Modelos de *bases de datos* utilizados
 
-*[Incluya aquí una explicación del análisis realizado y la justificación de los modelos de *bases de datos* seleccionados. Incluya todo lo que considere necesario para que una persona sin conocimientos técnicos pueda entender de que trata su solución.]*
-
-
 Para el desarrollo de este proyecto, se están utilizando dos bases de datos distintas, MongoDB y Redis.
+Se decidio utilizar MongoDB principalmente por que es una de las bases de datos NoSql mas usasda lo que permite una integracion mucho mas sencilla con otras aplicaciones. De igual menara, MongoDB permite el control de grandes cantidades de informacion con consultas optimizadas y gran capacidad de escalabilidad para agregar productos y usuarios.
+
+Tambien, se utilizo Redis para mantenr nuestra pagina rapida y agil en el manejod de usuarios gracias a que la información queda almacenada en memoria en lugar del disco, Redis ofrece rápidos accesos en la recuperación de los datos. Redis da la posiblidad de manejar tiempos de expiracion que cierren la cuenta de un usuario en caso de que este se encuentre inactivo por mucho tiempo, esto es util para temas de seguirdad y administracion de recursos dentro de la base de datos.
+
+Ambos son esquemas NoSQL, que no utilizan un modelo relacional, y esto es útil cuando las estructuras de los datos que utilizamos pueden variar. Es posible hacer cambios de los esquemas sin tener que parar la base de datos. Las bases NoSQL pueden adaptarse a proyectos reales más fácilmente que un modelo entidad-relación.
+
 
 #### 3.1.1 MongoDB
 
@@ -106,7 +109,7 @@ Para el desarrollo de este proyecto, se están utilizando dos bases de datos dis
 
 
 #### 3.1.2 Redis
-Redis: sirve para mantener las sesiones activas y actualizadas.
+Redis: sirve para mantener las sesiones activas y actualizadas.Esto funciona de manera que redis se mantenie revisando si el usuario esta activo y en caso de que no lo este empieza un timer de 5 minutos en los que al expirar cierra la sesion y el usuario tiene que volver a iniciar sesison.
 
 ### 3.2 Arquitectura de la solución
 
