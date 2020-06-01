@@ -164,30 +164,7 @@ app.get('/home', async (req, res) => {
     console.log("Home");
 
     var userVer = userLogin.toString();
-    /*const pipeline =[{
-        $group: {
-            _id: "$pName",
-            count: {
-                "$sum": 1
-                    }
-                }
-            }, {
-                $sort: {
-                    count: -1
-            }
-    }]*/
-    /*var test = require('monk')('localhost:4000/home'),
-    sample = db.get('tienda');
-    sample.col.group(
-        ["pName"],
-        {},
-        {"count":0},
-        "function (obj,prev) { prev.count++; }",
-            function(err,docs) {
-            if (err) console.log(err);
-            console.log( docs );
-    }
-    );*/
+    
     mongo.connect(url, async (err, db) => {
 
         console.log(userVer);
