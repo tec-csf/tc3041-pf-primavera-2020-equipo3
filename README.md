@@ -257,15 +257,84 @@ A lo largo de la aplicación, no se implementaron Headers de HTTP.
 
 ##### 3.5.4.1 POST
 
-##### 3.5.4.2 GET
+**app.post('/loginValidate', ...);**
 
-* **Descripción**:
-* **URL**:
-* **Verbos HTTP**:
-* **Headers**:
-* **Formato JSON del cuerpo de la solicitud**: 
-* **Formato JSON de la respuesta**:
-* **Códigos de error**:
+* Envía la información de un usuario que se está intentando conectar a la página web, solo maneja el correo y la contraseña.
+* http://35.193.212.207:4000/loginValidate
+* POST
+* _Invalid credentials_
+
+**app.post('/newUser/save', ...);**
+
+* Envía los campos insertados por un usuario para poder almacenarlo en la base de datos, en caso que el correo ya se encuentre en la base de datos va a marcar un error. Realiza una función de hash al momento de insertar la contraseña.
+* http://35.193.212.207:4000/newUser/save
+* POST
+* _That email is already being used_
+
+**app.post('/addProducts/save', ...)**
+
+* Permite la creación de un nuevo producto, esta página es exclusiva para el desarrollo de la aplicación.
+* http://35.193.212.207:4000/addProducts/save
+* POST
+* _Couldn't load website_
+
+**app.post('/addCards/save', ...);**
+
+* Esta página se encarga de almacenar los datos nuevos de una tarjeta recién creada en la colección correspondiente.
+* http://35.193.212.207:4000/addCards/save
+* POST
+* _Couldn't load website_
+
+**app.post('/deleteCard/confirm', ...);**
+
+* Se encarga de eliminar una tarjeta de su colección correspondiente
+* http://35.193.212.207:4000/deleteCard/confirm
+* POST
+* _Couldn't load website_
+
+**app.post('/newAddress/save', ...);**
+
+* Esta sección se encarga de mandar a guardar los campos para crear una nueva dirección con el usuario ingresado.
+* http://35.193.212.207:4000/newAddress/save
+* POST
+* _Couldn't load website_
+
+**app.post('/deleteAddress/save', ...);**
+
+* Esta sección se encarga de eliminar una dirección, el usuario no tiene que hacerle input a los campos debido a que se manejan por la página web.
+* http://35.193.212.207:4000/deleteAddress/save
+* POST
+* _Couldn't load website_
+
+**app.post('/addWishlist/save', ...)**
+
+* Esta página se encarga de cargar los campos de los datos del producto a la colección del wishlist de la base de datos.
+* http://35.193.212.207:4000/addWishlist/sace
+* POST
+* _Couldn't load website_
+
+**app.post('/addItem/confirm', ...);**
+
+* Esta sección se encarga de cargar los datos requeridos al Carrito, agarra los datos necesarios de dos diferentes colecciones: _users_ y _products_.
+* http://35.193.212.207:4000/addItem/confirm
+* POST
+* _Couldn't load website_
+
+**app.post('/deleteItem/confirm', ...)**
+
+* Esta página se encarga de eliminar los datos que se encuentran en el carrito, los campos usados con el correo del usuario y el nombre del producto.
+* http://35.193.212.207:4000/deleteItem/confirm
+* POST
+* _Couldn't load website_
+
+**app.post('/buyItem/confirm', ...)'**
+
+* Esta sección funciona un tanto diferente a las demás, aquí se está obteniendo información de cuatro colecciones distintas, _users_, _addresses_, _bank accounts_ y _cart_. Aquí se checan que los datos que están siendo insertados existan en sus colecciones correspondientes.
+* http://35.193.212.207:4000/buyItem/confirm
+* POST
+* _Couldn't load website_
+
+##### 3.5.4.2 GET
 
 **app.get('/', ...);** y **app.get('/login'...);**
 
@@ -334,6 +403,69 @@ A lo largo de la aplicación, no se implementaron Headers de HTTP.
 
 * Esta página se encarga de añadir direcciones nuevas a la cuenta de un usuario, se puede regresar a la pantalla principal de ajustes en caso que no se requiera añadir una nueva dirección.
 * http://35.193.212.207:4000/newAddress
+* GET
+* _Coulnd't load site_
+
+**app.get('/deleteAddress', ...)**
+
+* Esta página esta manejando el borrado de una dirección ya existente en la base de datos, permite al usuario regresar a la página principal de ajustes.
+* http://35.193.212.207:4000/deleteAddress
+* GET
+* _Coulnd't load site_
+
+**app.get('/wishlist', ...)**
+
+* Esta página despliega los productos que se encuentran en el wishlist de un usuario.
+* http://35.193.212.207:4000/wishlist
+* GET
+* _Coulnd't load site_
+
+**app.get('/addWishlist/:Name', ...)**
+
+* Esta página esta desplegando la información de un producto que será añadido al wishlist de un usuario.
+* http://35.193.212.207:4000/addWishlist/:Name
+* GET
+* _Coulnd't load site_
+
+**app.get('/cart', ...)**
+
+* Esta página se encarga de desplegar los artículos que se encuentran en el carrito de un usuario, se necesita estar ingresado para poder ver esos productos.
+* http://35.193.212.207:4000/cart
+* GET
+* _Coulnd't load site_
+
+**app.get('/addToCart/:Name', ...)**
+
+* Esta página le permite a un usuario ver los datos del producto que va a ingresar al carrito, aquí se puede aumentar la cantidad del producto que se desea aumentar.
+* http://35.193.212.207:4000/addToCart
+* GET
+* _Coulnd't load site_
+
+**app.get('/deleteItem/:pName', ...)**
+
+* Una vez que el usuario entra a esta página, se pueden eliminar los productos que se encuentran dentro del carrito.
+* http://35.193.212.207:4000/deleteItem/:pName
+* GET
+* _Coulnd't load site_
+
+**app.get('/buyItem/:pName', ...)**
+
+* El pName del nombre de esta solicitud, se encarga de desplegar el producto correcto para que el usuario lo pueda comprar. Para poder realizar la transacción se necesita insertar el número de una tarjeta de crédito que este registrada y una dirección válida.
+* http://35.193.212.207:4000/buyItem/:pName
+* GET
+* _Coulnd't load site_
+
+**app.get('/orders', ...)**
+
+* En esta página se pueden encontrar los pedidos anteriores llevados a cabo por un usuario, están ordenados de manera ascendente, es decir, los que se encuentran hasta abajo son los mas viejos.
+* http://35.193.212.207:4000/orders
+* GET
+* _Coulnd't load site_
+
+**app.get('/logout', ...)**
+
+* Esta página solo se encarga de redirigir al usuario a la página de inicio/login.
+* http://35.193.212.207:4000/logout
 * GET
 * _Coulnd't load site_
 
