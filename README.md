@@ -107,7 +107,7 @@ Ambos son esquemas NoSQL, que no utilizan un modelo relacional, y esto es útil 
 
 
 #### 3.1.2 Redis
-Redis: sirve para mantener las sesiones activas y actualizadas.Esto funciona de manera que redis se mantenie revisando si el usuario esta activo y en caso de que no lo este empieza un timer de 5 minutos en los que al expirar cierra la sesion y el usuario tiene que volver a iniciar sesison.
+Redi sirve para mantener las sesiones activas y actualizadas. Se utilizó RedisLabs como servidor. Las sesiones se manejan desde el momento del Login, ya que se crea una llave-valor conformada por el email-uuid. La sesión al hacer login se crea con una expiración de 300s o 5min, esta sesión se refresca cada que el usuario interactúa con la pagina. Si el usuario no interactúa con la pagina en el rango de expiración de la sesión, la sesión automáticamente expira y al momento de hacer cualquier otra interacción con la pagina, el backend detecta la sesión expirada y redirige al usuario al login.
 
 ### 3.2 Arquitectura de la solución
 ![](Arquitectura/pfUML.png)
