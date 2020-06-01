@@ -222,8 +222,6 @@ Por último, las últimas librerías, *mongodb* y *redis*, se encargan de realiz
 
 ### 3.5 API
 
-*[Incluya aquí una explicación de la solución utilizada para implementar la API del proyecto. No olvide incluir las ligas o referencias donde se puede encontrar información de los lenguajes de programación, frameworks y librerías utilizadas.]*
-
 Para el manejo de las operaciones _RESTful_, se están llevando a cabo mediante la comunicación entre los documentos que componen el frontend y el _index.js_.
 
 Las operaciones y sus descripciones podrán ser vistas en la sección **3.5.4**.
@@ -247,13 +245,9 @@ Para poder llevar a cabo las operaciones, se utilizan *endpoints*, es decir, sec
 
 #### 3.5.4 Endpoints
 
-*[Incluya aquí una explicación de cada uno de los endpoints que forman parte de la API. Cada endpoint debe estar correctamente documentado.]*
-
 A continuación se divide la sección en dos sub secciones, una que se enfoca en las operaciones de tipo POST y otra sección que se enfoca en las operaciones de tipo get.
 
 A lo largo de la aplicación, no se implementaron Headers de HTTP.
-
-*[Por cada endpoint debe incluir lo siguiente:]*
 
 ##### 3.5.4.1 POST
 
@@ -470,8 +464,6 @@ A lo largo de la aplicación, no se implementaron Headers de HTTP.
 * _Coulnd't load site_
 
 ## 3.6 Pasos a seguir para utilizar el proyecto
-
-*[Incluya aquí una guía paso a paso para poder utilizar el proyecto, desde la clonación del repositorio hasta el despliegue de la solución en una plataforma en la nube.]*
 
 - NOTA
   - Es necesario tener instalado Node.js para poder correr esta aplicación, en caso que no cuente con Node JS, lo puede descargar e instalar de [aquí](https://nodejs.org/es/download/).
