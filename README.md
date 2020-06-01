@@ -105,15 +105,12 @@ Ambos son esquemas NoSQL, que no utilizan un modelo relacional, y esto es útil 
 
   Una colección de MongoDB puede ser visto como una tabla en MySQL, aquí se están alojando los valores de cada campo que se insertó y, lo mas importante, el ObjectID (el id que genera MongoDB de manera automática).
 
-![](Arquitectura/pfUML.png)
-
 
 #### 3.1.2 Redis
 Redis: sirve para mantener las sesiones activas y actualizadas.Esto funciona de manera que redis se mantenie revisando si el usuario esta activo y en caso de que no lo este empieza un timer de 5 minutos en los que al expirar cierra la sesion y el usuario tiene que volver a iniciar sesison.
 
 ### 3.2 Arquitectura de la solución
-
-
+![](Arquitectura/pfUML.png)
 
 ### 3.3 Frontend
 
